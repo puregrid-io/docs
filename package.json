@@ -1,0 +1,24 @@
+{
+  "name": "puregrid-docs",
+  "private": true,
+  "description": "Docs for http://docs.puregrid.io",
+  "version": "0.1.0",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "gatsby develop -H 0.0.0.0",
+    "build": "gatsby build",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "@puregrid/themes": "^0.0.1-alpha.0",
+    "gatsby": "^2.24.73",
+    "gatsby-theme-apollo-docs": "4.5.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-icons": "^3.11.0"
+  },
+  "devDependencies": {
+    "eslint-plugin-react": "^7.21.4",
+    "eslint-plugin-react-hooks": "^4.1.2"
+  }
+}

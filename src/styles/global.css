@@ -1,0 +1,11 @@
+svg {
+  display: block;
+}
+
+.title-sidebar {
+  display: none;
+}
+
+input {
+  max-width: 100%;
+}

@@ -1,0 +1,41 @@
+---
+title: Column Grouping
+description: Learn how to group columns
+---
+
+import { Alert, AlertType, Showcase } from '../../src/components';
+import { ColumnGrouping } from '../../examples';
+
+Columns can be logically grouped. There is a special `ColumnGroup` type for this, it has a subset of column options and also a `children` array. A definition in the `columns` array can be either type.
+
+```ts
+const [columns, setColumns] = useState<Columns<Product>>([
+  {
+    // This is a ColumnGroup.
+    key: 'productInfo',
+    header: 'Product Information',
+    children: [
+      {
+        // This is a Column.
+        key: 'productName',
+        header: 'Name',
+        getValue: p => p.name,
+        align: ColumnAlign.End,
+      },
+      {
+        // This is a Column.
+        key: 'productQuantity',
+        header: 'Qty.',
+        getValue: p => p.quantity,
+        align: ColumnAlign.End,
+      },
+    ],
+  },
+]);
+```
+
+A `ColumnGroup` can be nested within another `ColumnGroup`, as seen in the example below:
+
+<Showcase fileName="ColumnGrouping.tsx">
+  <ColumnGrouping />
+</Showcase>

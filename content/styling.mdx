@@ -1,0 +1,50 @@
+---
+title: Styling
+description: Learn how to customize the look of the grid
+---
+
+import { Showcase } from '../src/components';
+import { ThemingWithJS, NoBordersTheme } from '../examples';
+
+Theming is done by passing a `Theme` object into the `theme` prop. In addition all elements have semantic classes for styling not covered by variables such as `pg-body-cell`.
+
+There are two built in themes:
+
+- Aurora (light theme, default)
+- Umbra (dark theme)
+
+You can browse each theme and all the available properties by visiting the `@puregrid/themes` [repository](https://github.com/puregrid-io/themes).
+
+When creating your own theme a typical approach would be to spread in `auroraTheme` or `umbraTheme` as a base:
+
+```tsx:title=Theming+via+the+theme+props
+import { Theme, umbraTheme } from '@puregrid/themes';
+
+const myCustomTheme: Theme = {
+  // Unless you override all theme variables you should spread
+  // in umbraTheme or auroraTheme.
+  ...umbraTheme,
+  selectionBg: 'rgb(244, 188, 53)',
+}
+
+<Grid
+  theme={myCustomTheme}
+/>
+```
+
+<Showcase fileName="ThemingWithJS.tsx">
+  <ThemingWithJS />
+</Showcase>
+
+Some variables can be omitted to achieve the style you want. For example you could omit `bodyTextColor` to inherit the text color from your page. Another popular grid style is to omit vertical and/or horizontal borders in the grid.
+
+```ts:title=Removing+cell+borders
+const noBordersTheme: Theme = {
+  ...auroraTheme,
+  cellBorderColor: 'transparent',
+};
+```
+
+<Showcase fileName="NoBordersTheme.tsx">
+  <NoBordersTheme />
+</Showcase>

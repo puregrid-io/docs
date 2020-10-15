@@ -1,0 +1,108 @@
+---
+title: Grid Props
+description: Learn about all the grid props you can pass in
+---
+
+import { Alert, Showcase } from '../src/components';
+import { NoRows } from '../examples';
+
+Puregrid is declarative and controlled by props, there is no imperative API to learn. The grid is also mostly controlled by state that you own, which is modified via callbacks.
+
+```tsx:title=A+quick+peak+at+all+available+Grid+props
+// Obviously you don't need to and probably don't want to specify
+// all these options.
+<Grid<YourDataShape>
+  direction={Direction.Rtl}
+  theme={myCustomTheme}
+  columns={columns}
+  defaultColumn={{
+    width: 140,
+  }}
+  defaultColumnGroup={{
+    resizable: false,
+  }}
+  onColumnsChange={setColumns}
+  rows={rows}
+  noRows="Loading..."
+  virtualRows
+  ssrHeight={800}
+  cellRenderers={cellRenderers}
+  wrapCells
+  detailsRowRenderer={(row: DetailsRow<string>) => {
+    return <div>{row.data}</div>;
+  }}
+  groupCellRenderer={groupCellRenderer}
+  filterRenderers={filterRenderers}
+  footer={
+    <Pagination
+      itemCount={data.length}
+      pageIndex={pageIndex}
+      pageSize={pageSize}
+      onPageChange={setPageIndex}
+    />
+  }
+/>
+```
+
+You can also pass div HTML attributes in:
+
+```tsx:title=Grid+HTML+attributes
+<Grid<YourDataShape>
+  style={{ width: 900, height: 500 }}
+  data-test-selector="my-grid"
+/>
+```
+
+## Columns
+
+You pass in a `columns` definition array and if you want the grid to handle resize, reorder, or sorting changes you should also pass an `onColumnsChange` handler.
+
+Additionally you can pass in `defaultColumn` and `defaultColumnGroup` objects to control the default options for columns and column groups. See [Column Basics](/columns/column-basics).
+
+## Rows
+
+You don't pass your data directly into the grid, instead you pass it into `useClientRows` and this gives you back rows (potentially grouped, sorted, paginated, and filtered) that the grid can work with. See [Row Basics](/rows/row-basics) and [Serverside Guide](/rows/serverside-rows).
+
+## Renderers
+
+The only renderer which lives in column definitions is the `header` because it's unlikely to frequently change (e.g. as you type). Other renderers are passed directly into the grid and in the case of cells and filters specified in the column definitions as strings.
+
+### cellRenderers
+
+A key-value object of cell renderers, the key is referenced in column definitions and the value is a function which takes a column and row and returns a `ReactNode`. See [Cell Rendering](/cells/cell-rendering).
+
+### groupCellRenderer
+
+A renderer function which takes a column and row and returns a `ReactNode` for grouping rows. See [Row Grouping](/rows/row-grouping).
+
+### detailsRowRenderer
+
+A renderer function which is given a details row object and returns a `ReactNode`. See [Master-details rows](/rows/master-details-rows).
+
+### filterRenderers
+
+A key-value object of cell renderers, the key is referenced in column definitions and the value is a function which takes a column and row and returns a `ReactNode`. See [Column Filtering](/columns/column-filtering).
+
+## No Rows
+
+`noRows` prop allows you to render something custom when there are no rows such as a loading spinner or a message (or both). It defaults to `null` and any `ReactNode` is permitted.
+
+<Showcase fileName="NoRows.tsx">
+  <NoRows />
+</Showcase>
+
+## Virtual Rows
+
+You can toggle on virtual rows so that only rows in the viewport are rendered. Rows must have a fixed height when using this option. See [Virtual Rows](/rows/virtual-rows).
+
+## Direction
+
+You can orient the grid for RTL (Right to left languages) with the `direction` prop. See [RTL (Right to left)](/rtl).
+
+## Theme
+
+You can pass a JS object for theming as an alternative to CSS Variables. See [Styling](/styling)
+
+## Footer
+
+You can pass any `ReactNode` to `footer`, checkout [Pagination](/rows/pagination) for an example.

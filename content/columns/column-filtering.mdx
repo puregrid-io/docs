@@ -1,0 +1,146 @@
+---
+title: Column Filtering
+description: An in-depth look at column filtering
+---
+
+import { Showcase } from '../../src/components';
+import { ColumnFiltering } from '../../examples';
+
+## The filter function
+
+If you want to add a column filter you need to specify a `filter` function in the column definition:
+
+```ts:title=Custom+header+rendering
+const [columns, setColumns] = useState<Columns<User>>([
+  {
+    key: 'name',
+    header: 'Name',
+    getValue: user => user.name,
+    filter: someFilterFunction,
+  },
+]);
+```
+
+### Provided filters
+
+Puregrid provides some defaults filter functions you can import:
+
+`exactMatch`
+
+Uses [Object.is](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is) to test that the filter value and column cell value are the same. You can use this for strings too but it's case-sensitive.
+
+`stringMatch`
+
+Uses a case-insensitive equality comparison (suitable for latin based languages) to test that the filter value and column cell value are the same.
+
+`partialStringMatch`
+
+Uses a case-insensitive test (suitable for latin based languages) to test that the filter value _partially_ matches the column cell value.
+
+You may have other needs such as testing a Turkish string or checking if the cell value fits into a range. Writing a custom filter function is simple:
+
+### Custom range filter
+
+Let's say your filter renderer is a range slider. Your filter function could look something like this:
+
+```ts:title=Custom+range+filter
+function numberRange<T>(
+  column: DerivedColumn<T>,
+  item: T,
+  filterValue: [number, number]
+) {
+  const value = column.getValue(item) as number;
+  return value >= filterValue[0] && value <= filterValue[1];
+}
+```
+
+### Custom locale filter
+
+The standard [toLowerCase](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase) function doesn't always get it right for non-latin languages like Turkish. In that case you can write one with [toLocaleLowerCase](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLocaleLowerCase). Note that if you only need an exact match rather than partial, a [Collator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator) created ahead of time is more efficient.
+
+```ts:title=Custom+Turkish+string+filter
+function turkishPartialMatch<T>(
+  column: DerivedColumn<T>,
+  item: T,
+  filterValue: string
+) {
+  return (
+    String(column.getValue(item))
+      .toLocaleLowerCase('tr')
+      .indexOf(filterValue.toLocaleLowerCase('tr')) !== -1
+  );
+}
+```
+
+## Rendering filters
+
+Puregrid doesn't come with built in filters because UI controls are highly subjective and there are a myriad of them available, or you might have your own.
+
+Like [cell renderers](/cells/cell-rendering), filter renderers are not defined in Columns for performance reasons due to the amount of times they need to update from user input.
+
+Instead you should define an object of renderers, as well as your own state to store the values:
+
+```ts:title=Defining+filter+renderers
+const [filterState, setFilterState] = useState<FilterState>({});
+
+const filterRenderers: FilterRenderers<Product> = {
+  string: column => {
+    return (
+      <input
+        value={(filterState[column.key] as string) || ''}
+        placeholder="Filter"
+        onChange={e =>
+          setFilterState(s => ({ ...s, [column.key]: e.target.value }))
+        }
+      />
+    );
+  },
+};
+```
+
+And then pass them into the `Grid`:
+
+```tsx:title=Pass+the+filter+renderers+into+the+Grid
+<Grid
+  // ...
+  filterRenderers={filterRenderers}
+/>
+```
+
+Finally, you need to pass `filterState` into `useClientRows`:
+
+```ts:title=Pass+filter+state+into+useClientRows
+const rows = useClientRows<Product>({
+  // ...
+  filterState,
+});
+```
+
+## Global filtering
+
+It's also possible to filter across all columns. This stringifies all column calues and checks for a partial, case-insensitive match.
+
+To enable this you need to pass a `globalFilter` string value into `useClientRows`:
+
+```ts:title=Using+a+global+filter
+const [globalFilter, setGlobalFilter] = useState('');
+
+const rows = useClientRows<Product>({
+  // ...
+  globalFilter,
+  // You can also cache the string values of each row into a single string
+  // to improve filter performance, but on the flipside this will increase
+  // processing overhead when row data changes.
+  globalFilterCache: true,
+});
+```
+
+See example below for a demo of a global filter.
+
+## Example
+
+<Showcase fileName="ColumnFiltering.tsx">
+  <ColumnFiltering />
+</Showcase>
+
+Note these filter controls are just examples. In reality you'd probably want a better UX for the age range filter for instance.

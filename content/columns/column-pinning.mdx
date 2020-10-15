@@ -1,0 +1,48 @@
+---
+title: Column Pinning
+description: Learn about how to pin columns in the view
+---
+
+import { Alert, AlertType, Showcase } from '../../src/components';
+import { ColumnPinning } from '../../examples';
+
+You can pin any column with the `pinned: true` option, there is no stipulation that the column has to be on the far right or left. When it touches either side of the grid edge it will stick there.
+
+```ts:title=Pinning+a+column
+const [columns, setColumns] = useState<Columns<ImportantData>>([
+  {
+    key: 'id',
+    header: 'ID',
+    width: 60,
+    getValue: d => d.id,
+    pinned: true,
+  },
+  {
+    key: 'veryWideThing',
+    header: 'Very Wide Thing',
+    width: 1200,
+    getValue: d => d.veryWideThing,
+  },
+  {
+    key: 'killSwitch',
+    header: 'Kill it',
+    width: 64,
+    getValue: d => d.killSwitch,
+    align: ColumnAlign.End,
+    cellRenderer: 'checkbox',
+    pinned: true,
+  },
+  {
+    key: 'anotherVeryWideThing',
+    header: 'Another Very Wide Thing',
+    width: 1200,
+    getValue: d => d.veryWideThing,
+  },
+]);
+```
+
+Try scrolling all the way to the right:
+
+<Showcase fileName="ColumnPinning.tsx">
+  <ColumnPinning />
+</Showcase>

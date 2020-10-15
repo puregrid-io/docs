@@ -1,0 +1,24 @@
+---
+title: Column Alignment
+description: How to align header and cell content
+---
+
+import { Showcase } from '../../src/components';
+import { ColumnAlignment } from '../../examples';
+
+You can adjust the alignment of content in cells using `align`. By default align won't be set, so it will be left or right depending on the user's browser language, or the `direction` you set in the [Grid Props](/grid-props). The possible values are:
+
+```ts:title=Column+alignment
+// Plain JS users should also import and use `ColumnAlign`.
+export enum ColumnAlign {
+  Start = 'Start',
+  Center = 'Center',
+  End = 'End',
+}
+```
+
+It's a common idiom to align numbers at the end for example. Puregrid uses the more modern concept of "start" and "end" which will depend on the language direction set on the grid or browser.
+
+<Showcase fileName="ColumnAlignment.tsx">
+  <ColumnAlignment />
+</Showcase>

@@ -1,0 +1,104 @@
+---
+title: Column Definitions
+description: Column definitions and defaults
+---
+
+import { Alert, AlertType } from '../../src/components';
+
+While columns don't need to be in state you would typically do so, unless you aren't interested in sorting, resizing, or reordering. Thus you would normally use `useState` and pass `setColumns` to `onColumnsChange`:
+
+```tsx:title=Passing+columns+and+setter+into+the+grid
+// If you're a Typescript user you can define the interface of
+// your row data.
+interface YourRowItemShape {
+  id: string;
+  productName: string;
+  unitsInStock: number;
+}
+
+const [columns, setColumns] = useState<Columns<YourRowItemShape>>([
+  // ...
+]);
+
+<Grid<YourRowItemShape>
+  columns={columns}
+  onColumnsChange={setColumns}
+  rows={rows}
+/>;
+```
+
+## Required properties
+
+Columns are defined in an array of objects (or definitions), these are the required properties:
+
+```ts:title=Required+column+properties
+const [columns, setColumns] = useState<Columns<Stock>>([
+  {
+    // Anything you like. No columns should share the same key.
+    key: 'symbol',
+    // Must be a string, see Header Rendering for non-strings.
+    header: 'Symbol',
+    // A function which returns the data for cells in this column.
+    // You can modify it according to the requested source (see below).
+    getValue: stock => stock.symbol,
+  },
+  {
+    key: 'marketCap',
+    header: 'Market Cap',
+    // Return an unformatted number when exporting or copying to clipboard.
+    getValue: (stock, source) =>
+      source === ValueSource.Grid
+        ? formatCcy(stock.marketCap)
+        : stock.marketCap,
+  },
+]);
+```
+
+## Default definitions
+
+You can define defaults for all columns using the `defaultColumn` and `defaultColumnGroup` props:
+
+```tsx:title=Setting+column+defaults
+// Make all columns 140px by default.
+const defaultColumn = {
+  width: 140,
+}
+
+// Disable resizing of column groups.
+const defaultColumnGroup = {
+  resizable: false,
+}
+
+<Grid<Pupil>
+  defaultColumn={defaultColumn}
+  defaultColumnGroup={defaultColumnGroup}
+/>
+```
+
+<Alert>
+  You can put the definition directly in the JSX if you're only using
+  scalar (primitive) types. If your default object contains a function such
+  as filter or sort then it should be outside render or wrapped in useRef
+  or useMemo.
+</Alert>
+
+Puregrid provides some defaults if not overriden by you. They are as follows:
+
+```ts:title=Puregrid+column+defaults
+// `onColumnChange` passed in.
+const libDefaultColGroup = {
+  resizable: true,
+  reorderable: true,
+};
+const libDefaultColumn = {
+  width: 120,
+  resizable: true,
+  reorderable: true,
+};
+
+// `onColumnChange` not passed in.
+const libDefaultColGroupReadonly = {};
+const libDefaultColumnReadonly = {
+  width: 120,
+};
+```

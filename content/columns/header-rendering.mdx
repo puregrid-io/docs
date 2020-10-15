@@ -1,0 +1,44 @@
+---
+title: Header Rendering
+description: How to render more than strings (or translate them)
+---
+
+The `header` option **must** be a string. If you want to render a custom `ReactNode` or dynamic value then you should implement a renderer in `headerRenderers`.
+
+```tsx:title=Custom+header+rendering
+const [allSelected, setAllSelected] = useState(false);
+const [columns, setColumns] = useState<Columns<Candidate>>([
+  {
+    key: 'rowSelected',
+    header: 'selectAll',
+    // TODO: How do we use values not in the row data!!!!
+    getValue: candidate => candidate.secondStage,
+  },
+]);
+
+const headerRenderers = {
+  selectAll: () => <input type="checkbox" checked={allSelected} />
+}
+
+<Grid
+  headerRenderers={headerRenderers}
+/>
+```
+
+See this in action on the [Row Selection](/rows/row-selection) demo.
+
+Similarly if you want to support translations in the header you can follow the same process by using the `header` values to lookup translations:
+
+```tsx:title=Translating+headers
+const [columns, setColumns] = useState<Columns<Candidate>>([
+  {
+    key: 'occupation',
+    header: 'Occupation',
+    getValue: candidate => candidate.occupation,
+  },
+]);
+
+const headerRenderers = {
+  Occupation: () => t('Occupation'),
+};
+```

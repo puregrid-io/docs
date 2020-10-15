@@ -1,0 +1,83 @@
+---
+title: Pagination
+description: Use our pre-built pagination or something custom
+---
+
+import { Showcase } from '../../src/components';
+import { PaginationBuiltin, PaginationCustom } from '../../examples';
+
+## Setup state and data
+
+Pagination state is controlled by you and the pagination controls can either use our provided ones or something completely custom.
+
+Whether you're doing pagination on the client or server the first thing to create is some state to keep track of the page index:
+
+```ts:title=Create+state+for+page+index
+// Note that the index is 0 based.
+const [pageIndex, setPageIndex] = useState(0);
+```
+
+The next step depends on if you're handling data on the client or server. Puregrid gives you `useClientRows` to handle client-side pagination. To learn how to paginate on the server checkout [Serverside Rows](/rows/serverside-rows).
+
+```ts:title=Client+side+pagination
+const rows = useClientRows<DigitalAsset>({
+  columns,
+  data,
+  getItemId: asset => asset.id,
+  pageSize: 10,
+  pageIndex,
+});
+```
+
+## Using our pagination controls
+
+If you prefer to use our pagination controls the final step is to import `Pagination` and pass it into the footer.
+
+```tsx:title=Pass+Pagination+into+the+footer
+<Grid<DigitalAsset>
+  footer={
+    <Pagination
+      itemCount={data.length}
+      pageIndex={pageIndex}
+      pageSize={pageSize}
+      onPageChange={setPageIndex}
+    />
+  }
+/>
+```
+
+<Showcase fileName="PaginationBuiltin.tsx">
+  <PaginationBuiltin />
+</Showcase>
+
+## Custom paging controls
+
+Alternatively you can use your own paging controls. Here's a rudimentary example to get you started.
+
+```tsx:title=Pass+Pagination+into+the+footer
+const [pageIndex, setPageIndex] = useState(0);
+const maxPage = Math.ceil(data.length / pageSize) - 1;
+
+<Grid<DigitalAsset>
+  footer={
+    <>
+      <button
+        onClick={() => setPageIndex(pageIndex - 1)}
+        disabled={pageIndex === 0}
+      >
+        Prev page
+      </button>
+      <button
+        onClick={() => setPageIndex(pageIndex + 1)}
+        disabled={pageIndex === maxPage}
+      >
+        Next page
+      </button>
+    </>
+  }
+/>;
+```
+
+<Showcase fileName="PaginationCustom.tsx">
+  <PaginationCustom />
+</Showcase>

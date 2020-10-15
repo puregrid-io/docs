@@ -1,0 +1,58 @@
+---
+title: Row State
+description: How to handle row state such as selection and expansion
+---
+
+import { Showcase } from '../../src/components';
+import { RowSelection } from '../../examples';
+
+Row state is a key-value object where the key is the unique row identifier, and value is an object with state you want to keep about the row.
+
+```tsx:title=Row+state+interface
+export interface RowState {
+  expanded?: boolean;
+  selected?: boolean;
+  [key: string]: any;
+}
+```
+
+To use row state import `useRowState` and create some state:
+
+```ts:title=useRowState+hook
+const { getRowState, setRowState } = useRowState(initialState);
+```
+
+`getRowState` can be used to get all row state, or more typically just one row.
+
+```ts:title=Getting+row+state
+// Get the state for all rows.
+getRowState();
+
+// Get the state of one row.
+getRowState('someRowKey');
+```
+
+Like with React state there are two ways to set state:
+
+```ts:title=Setting+row+state
+// The object you pass will be MERGED into existing state.
+setRowState('someRowKey', { expanded: true });
+
+// Or you can use the function version which is NOT merged if you
+// want to read existing state or overwrite all of the state.
+setRowState('someRowKey', s => ({ ...s, expanded: !s.expanded }));
+```
+
+There's also a `resetRowState` incase you want to replace all row state:
+
+```ts:title=Replace+all+row+state
+resetRowState({});
+```
+
+## Example: Row selection
+
+Since row state is in your hands you can easily implement something like row selection.
+
+<Showcase fileName="RowSelection.tsx">
+  <RowSelection />
+</Showcase>

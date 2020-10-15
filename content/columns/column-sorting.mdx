@@ -1,0 +1,84 @@
+---
+title: Column Sorting
+description: An in-depth look at column sorting and customization
+---
+
+import { Showcase } from '../../src/components';
+import { ColumnSorting } from '../../examples';
+
+## Sorting basics
+
+By default column sorting will be enabled if you pass in an `onColumnsChange` handler as `sortable` will be `true`. You can change this default using `defaultColumn` as described in [Column Basics](/columns/column-basics/#default-definitions).
+
+There are three sorting states a column can be in:
+
+```ts:title=Sorting+states+(or+directions)
+export enum SortDirection {
+  None, // 0
+  Asc, // 1
+  Desc, // 2
+}
+```
+
+Note that even if you're a plain Javascript user you can still import `SortDirection` rather than using the numbers directly.
+
+Sort direction defaults to `None` and as the user clicks the column it will be cycled through. You only need to specify `sortDirection` if you want to start on something other than `None`:
+
+```ts:title=Setting+an+initial+sort+direction
+const columns = [
+  {
+    key: 'name',
+    header: 'Name',
+    sortDirection: SortDirection.Desc,
+  },
+];
+```
+
+Below we set the species to be sorted `Desc` by default. Multi-sort works out the box, try sorting `Age` and notice how it changes the two `Aardvark` entries.
+
+<Showcase fileName="ColumnSorting.tsx">
+  <ColumnSorting />
+</Showcase>
+
+## Custom sort functions
+
+The default sort function can't cover all cases, for example there are nuances in different languages. If you have specific needs you can write your own sort functions.
+
+Below is an example of a sort function tailored for Chinese (Hong Kong).
+
+```ts:title=Defining+a+custom+sort+function
+// A collator is far more performant than
+// `String.prototype.localeCompare`, if you don't
+// re-create it every render of course.
+const collator = new Intl.Collator('zh-HK', {
+  numeric: true,
+  sensitivity: 'base',
+});
+
+function customSortFunction<T>(column: Column<T>, personA: T, personB: T) {
+  const a = column.getValue(personA) as any;
+  const b = column.getValue(personB) as any;
+
+  // Locale aware string sort.
+  if (typeof a === 'string') {
+    return column.sortDirection === SortDirection.Asc
+      ? collator.compare(b, a)
+      : collator.compare(a, b);
+  }
+
+  // Number/boolean sort.
+  return column.sortDirection === SortDirection.Asc ? b - a : a - b;
+}
+```
+
+To use your custom sort function you can either specify it in `defaultColumn` for all columns as described in [Column Basics](/columns/column-basics/#default-definitions), or pass it into specific columns:
+
+```ts:title=Passing+custom+sort+into+a+column
+const columns = [
+  {
+    key: 'name',
+    header: 'Name',
+    sort: customSortFunction,
+  },
+];
+```

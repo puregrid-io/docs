@@ -1,0 +1,94 @@
+---
+title: Your first grid
+description: Learn the fundamentals with this simple grid
+---
+
+import { Showcase } from '../src/components';
+import { YourFirstGrid } from '../examples';
+
+The basic components of the grid are as follows:
+
+- Column definitions.
+- A column change handler if you want the columns to be resizable, sortable or reorderable.
+- Rows (which can either come from your server or be derived from your data via `useClientRows`).
+- A unique property value per item. If your rows don't have one then add one at the point of creating the data object, a simple incrementing counter such as `` `id-${ref++}` `` will do as long as it's done once.
+
+In the next chapters you can dive into Columns and Rows in detail but for now let's look at an example which covers the fundamentals.
+
+Note that throughout the docs we use Typescript so omit the types such as `Columns<Person>` and `<Person>` if you're using plain JS.
+
+```tsx:title=A+simple+grid
+import React, { useState } from 'react';
+import { Grid, Columns, ColumnAlign, useClientRows } from '@puregrid/core';
+
+interface Person {
+  uid: string;
+  name: string;
+  age: number;
+}
+
+const data: Person[] = [
+  {
+    uid: 'Hi7R7goh7',
+    name: 'Roger Finehorn',
+    age: 62,
+  },
+  {
+    uid: 'Ig6Rfgf548',
+    name: 'Janet Laurie',
+    age: 37,
+  },
+  {
+    uid: 'UYr65euiG79',
+    name: 'Dolores Panama',
+    age: 27,
+  },
+];
+
+export default function YourFirstGrid() {
+  // A column setter is optional if you don't want resizing, sorting,
+  // or reordering, in that case you can put this outside render or
+  // in a useMemo (useMemo is more efficient than useRef).
+  const [columns, setColumns] = useState<Columns<Person>>([
+    {
+      // Column keys **must** be unique across all columns.
+      key: 'name',
+      // `header` can be any ReactNode.
+      header: 'Name',
+      // This is the value to render in a cell for this column.
+      getValue: person => person.name,
+      // Optional, defaults to 120px.
+      width: 180,
+    },
+    {
+      key: 'age',
+      header: 'Age',
+      getValue: person => person.age,
+      align: ColumnAlign.End,
+      width: 80,
+    },
+  ]);
+
+  // This example derives rows from data on the client. If you want
+  // serverside filtering, sorting, and pagination then generate your
+  // rows from data on your server - see the Serverside section for
+  // more details.
+  const rows = useClientRows<Person>({
+    columns,
+    data,
+    getItemId: person => person.uid,
+  });
+
+  return (
+    <Grid<Person>
+      columns={columns}
+      onColumnsChange={setColumns}
+      rows={rows}
+    />
+  );
+}
+```
+
+<Showcase fileName="YourFirstGrid.tsx">
+  <YourFirstGrid />
+</Showcase>
