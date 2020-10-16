@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "@puregrid/themes": "^0.0.1-alpha.0",
-    "gatsby": "^2.24.73",
+    "gatsby": "^2.24.79",
     "gatsby-theme-apollo-docs": "4.5.3",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-icons": "^3.11.0"
   },
   "devDependencies": {

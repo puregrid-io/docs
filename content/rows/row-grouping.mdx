@@ -3,4 +3,82 @@ title: Row grouping
 description: How to group rows by their data on the client
 ---
 
-Hi
+import { Showcase } from '../../src/components';
+import { RowGrouping } from '../../examples';
+
+## Overview
+
+Row grouping finds the same values under a column and groups the rows together. For example if you have a Year column you could group all the rows under the same year together.
+
+You can either handle row grouping yourself on the server when dealing with large datasets (see [Serverside Rows](/rows/serverside-rows)), or set `group: true` in a [Column Definition](/columns/column-definition).
+
+```ts:title=Set+group+to+true
+{
+  key: 'year',
+  header: 'Year',
+  getValue: athlete => athlete.year,
+  group: true
+}
+```
+
+For clientside row grouping you can also set the depth of grouping you want to expand by default:
+
+```ts:title=Setting+default+expansion+depth
+const rows = useClientRows<Athlete>({
+  columns,
+  data,
+  getItemId: athlete => athlete.uid,
+  rowState,
+  // Expand the first group (defaults to 0).
+  defaultExpandTo: 1,
+});
+```
+
+If you set `defaultExpandTo` to `-1` it will expand all groups by default.
+
+The next step is to define a group row renderer.
+
+```ts:title=Set+group+to+true
+const groupCellRenderer: GroupCellRenderer<Product> = (column, row) => {
+  // Don't render anything on the group row except in the grouping cell.
+  if (column.key !== row.data.colKey) {
+    return null;
+  }
+
+  return (
+    <>
+      <button
+        onClick={() =>
+          setRowState(row.key, { expanded: !row.data.expanded })
+        }
+      >
+        {row.data.expanded ? '↓' : '→'}
+      </button>
+      {row.data.value} ({row.data.childCount})
+    </>
+  );
+};
+```
+
+Note that rather than use the `expanded` row state we use `row.data.expanded` because the `defaultExpandTo` option can influence the value.
+
+## Example
+
+<Showcase fileName="RowGrouping.tsx">
+  <RowGrouping />
+</Showcase>
+
+Another nice touch you might notice in the example is to not render values in cells which are grouped.
+
+```tsx:title=Don't+render+group+values+in+normal+rows
+// Don't render the grouped values as they can be seen on the grouping rows.
+const cellRenderers: CellRenderers<Winner> = {
+  default: (column, row) => !column.group && column.getValue(row.data),
+};
+
+<Grid<Winner>
+  defaultColumn={{
+    cellRenderer: 'default',
+  }}
+/>;
+```

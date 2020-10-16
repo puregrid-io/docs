@@ -8,6 +8,7 @@ export * from './NoBordersTheme';
 export * from './NoRows';
 export * from './PaginationBuiltin';
 export * from './PaginationCustom';
+export * from './RowGrouping';
 export * from './RowSelection';
 export * from './ThemingWithJS';
 export * from './YourFirstGrid';

@@ -58,7 +58,7 @@ const data: Candidate[] = [
     age: 15,
     resident: true,
   },
-]
+];
 
 function numberRange<T>(
   column: DerivedColumn<T>,
@@ -69,11 +69,7 @@ function numberRange<T>(
   return value >= filterValue[0] && value <= filterValue[1];
 }
 
-function booleanFilter<T>(
-  column: DerivedColumn<T>,
-  item: T,
-  filterValue: string
-) {
+function booleanFilter<T>(column: DerivedColumn<T>, item: T, filterValue: string) {
   const value = column.getValue(item) as boolean;
   return !filterValue || value === Boolean(Number(filterValue));
 }
@@ -137,15 +133,18 @@ export function ColumnFiltering() {
           min="0"
           max="130"
           value={filterState[column.key] ? String(filterState[column.key][0]) : '0'}
-          onChange={e => setFilterState(s => ({ ...s, [column.key]: [Number(e.target.value), 130] }))}
+          onChange={e =>
+            setFilterState(s => ({ ...s, [column.key]: [Number(e.target.value), 130] }))
+          }
         />
       );
     },
     boolean: column => {
       return (
-        <select value={String(filterState[column.key]) || ''} onChange={e =>
-          setFilterState(s => ({ ...s, [column.key]: e.target.value}))
-        }>
+        <select
+          value={String(filterState[column.key]) || ''}
+          onChange={e => setFilterState(s => ({ ...s, [column.key]: e.target.value }))}
+        >
           <option value="">All</option>
           <option value="1">True</option>
           <option value="0">False</option>
@@ -156,7 +155,9 @@ export function ColumnFiltering() {
 
   const cellRenderers: CellRenderers<Candidate> = {
     default: (column, row) => column.getValue(row.data),
-    boolean: (column, row) => <input type="checkbox" readOnly checked={column.getValue(row.data)} />,
+    boolean: (column, row) => (
+      <input type="checkbox" readOnly checked={column.getValue(row.data)} />
+    ),
   };
 
   return (
