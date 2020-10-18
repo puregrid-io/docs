@@ -57,13 +57,13 @@ export function DirectionRtl() {
       key: 'dialCode',
       header: 'Dial code',
       getValue: country => country.dialCode,
-      width: 100,
+      width: 110,
     },
     {
       key: 'name',
       header: 'Name',
       getValue: country => country.name,
-      width: 120,
+      width: 130,
     },
   ]);
 

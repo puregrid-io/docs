@@ -8,9 +8,9 @@ import {
   Columns,
   ColumnAlign,
   useClientRows,
-  HeaderRenderers,
-  GroupCellRenderer,
-  CellRenderers,
+  HeaderComponents,
+  GroupCellComponent,
+  CellComponents,
   useRowState,
 } from '@puregrid/core';
 import olympicWinners from './olympicWinnersSmall.json';
@@ -102,7 +102,6 @@ export function RowGrouping() {
   ]);
 
   const { getRowState, setRowState } = useRowState();
-  console.log('state', getRowState());
   const rows = useClientRows<Winner>({
     columns,
     data: olympicWinners,
@@ -111,13 +110,13 @@ export function RowGrouping() {
     rowState: getRowState(),
   });
 
-  const headerRenderers: HeaderRenderers<Winner> = {
+  const headerComponents: HeaderComponents<Winner> = {
     Gold: () => <FaMedal />,
     Silver: () => <BiMedal />,
     Bronze: () => <RiMedal2Line />,
   };
 
-  const groupCellRenderer: GroupCellRenderer<Winner> = (column, row) => {
+  const GroupCell: GroupCellComponent<Winner> = ({ column, row }) => {
     // Don't render anything on the group row except in the grouping cell.
     if (column.key !== row.data.colKey) {
       return null;
@@ -137,8 +136,8 @@ export function RowGrouping() {
   };
 
   // Don't render the grouped values as they can be seen on the grouping rows.
-  const cellRenderers: CellRenderers<Winner> = {
-    default: (column, row) => !column.group && column.getValue(row.data),
+  const cellComponents: CellComponents<Winner> = {
+    default: ({ column, row }) => !column.group && column.getValue(row.data),
   };
 
   return (
@@ -146,11 +145,11 @@ export function RowGrouping() {
       style={{ height: 600 }}
       columns={columns}
       onColumnsChange={setColumns}
-      headerRenderers={headerRenderers}
-      groupCellRenderer={groupCellRenderer}
-      cellRenderers={cellRenderers}
+      headerComponents={headerComponents}
+      GroupCell={GroupCell}
+      cellComponents={cellComponents}
       defaultColumn={{
-        cellRenderer: 'default',
+        cellComponent: 'default',
       }}
       rows={rows}
       virtualRows

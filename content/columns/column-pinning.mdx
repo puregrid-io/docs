@@ -29,7 +29,7 @@ const [columns, setColumns] = useState<Columns<ImportantData>>([
     width: 64,
     getValue: d => d.killSwitch,
     align: ColumnAlign.End,
-    cellRenderer: 'checkbox',
+    cellComponent: 'checkbox',
     pinned: true,
   },
   {

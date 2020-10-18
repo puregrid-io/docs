@@ -2,3 +2,43 @@
 title: Master-details rows
 description: Learn how to make a details row for a parent row
 ---
+
+import { Showcase } from '../../src/components';
+import { MasterDetailsRows } from '../../examples';
+
+Master-details rows allow you to specify a details row under a parent. That row spans the whole width of the grid and anything can go in it.
+
+## Clientside master-details
+
+To enable master-details when you have all your data upfront on the client pass in a `getRowDetails` function to `useClientRows`. This function is passed a row and if you want the "master" row to have a details row, return something other than `undefined`. This data is passed to the details renderer.
+
+```ts:title=Passing-getRowDetails-to-useClientRows
+const rows = useClientRows<Stock>({
+  columns,
+  data,
+  getItemId: stock => stock.symbol,
+  // You don't have to specify getRowSize unless you use virtualRows,
+  // if you do specify it then you're likely to want a different height
+  // for details rows.
+  getRowSize: row => (row.type === RowType.DetailsRow ? 200 : 46),
+  getRowDetails: row => {
+    if (row.data.symbol === 'APPL') {
+      return row.data.timeSeries;
+    }
+  },
+});
+```
+
+The final step is to pass in a `DetailsRow` component prop.
+
+```tsx:title=Details+Row+interface
+<Grid<Stock>
+  DetailsRow={
+    ({ row }) => <Chart data={row.data} /> // `timeSeries` returned in `getRowDetails`
+  }
+/>
+```
+
+<Showcase fileName="MasterDetailsRows.tsx">
+  <MasterDetailsRows />
+</Showcase>

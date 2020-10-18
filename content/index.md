@@ -11,6 +11,10 @@ Puregrid is a datagrid for React. It was created after working on dozens of data
 - Lightweight and performant. Our Javascript _and_ CSS is around 36kb minified (including tree-shakable optional extras) while "industry leaders" are in the 1-2 **megabyte** range for the JavaScript only.
 - Other datagrids which support lots of frameworks use `ReactDOM.render` to render each cell individually with a significant performance penalty and loss of React Context such as your theme settings.
 
+## Browser/device compatibility
+
+Puregrid is designed for desktop, mobile, mouse, and touch devices. However to provide the best and most lightweight experience for 99% of users it doesn't support old browsers such as Internet Explorer. If you need to support IE you should use another datagrid.
+
 ## Install from NPM
 
 Install the grid into your project using npm or yarn:

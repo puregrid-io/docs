@@ -83,7 +83,7 @@ Instead you should define an object of renderers, as well as your own state to s
 ```ts:title=Defining+filter+renderers
 const [filterState, setFilterState] = useState<FilterState>({});
 
-const filterRenderers: FilterRenderers<Product> = {
+const filterComponents: FilterComponents<Product> = {
   string: column => {
     return (
       <input
@@ -103,7 +103,7 @@ And then pass them into the `Grid`:
 ```tsx:title=Pass+the+filter+renderers+into+the+Grid
 <Grid
   // ...
-  filterRenderers={filterRenderers}
+  filterComponents={filterComponents}
 />
 ```
 

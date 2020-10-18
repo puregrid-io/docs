@@ -4,8 +4,8 @@ import {
   Columns,
   ColumnAlign,
   useClientRows,
-  HeaderRenderers,
-  CellRenderers,
+  HeaderComponents,
+  CellComponents,
   useRowState,
 } from '@puregrid/core';
 
@@ -47,7 +47,7 @@ export function RowSelection() {
       key: 'select',
       header: 'Select All',
       getValue: person => getRowState(person.uid).selected,
-      cellRenderer: 'selectRow',
+      cellComponent: 'selectRow',
       width: 40,
       pinned: true,
     },
@@ -73,7 +73,7 @@ export function RowSelection() {
     rowState: getRowState(),
   });
 
-  const headerRenderers: HeaderRenderers<Person> = {
+  const headerComponents: HeaderComponents<Person> = {
     'Select All': () => (
       <input
         type="checkbox"
@@ -87,8 +87,8 @@ export function RowSelection() {
     ),
   };
 
-  const cellRenderers: CellRenderers<Person> = {
-    selectRow: (column, row) => (
+  const cellComponents: CellComponents<Person> = {
+    selectRow: ({ row }) => (
       <input
         type="checkbox"
         checked={allSelected || getRowState(row.key).selected}
@@ -104,8 +104,8 @@ export function RowSelection() {
       columns={columns}
       onColumnsChange={setColumns}
       rows={rows}
-      headerRenderers={headerRenderers}
-      cellRenderers={cellRenderers}
+      headerComponents={headerComponents}
+      cellComponents={cellComponents}
     />
   );
 }

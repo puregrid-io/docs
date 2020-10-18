@@ -47,7 +47,7 @@ const [columns, setColumns] = useState<Columns<Stock>>([
     header: 'Market Cap',
     // Return an unformatted number when exporting or copying to clipboard.
     getValue: (stock, source) =>
-      source === ValueSource.Grid
+      source === ValueSource.Cell
         ? formatCcy(stock.marketCap)
         : stock.marketCap,
   },

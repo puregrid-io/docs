@@ -3,9 +3,9 @@ import {
   Grid,
   Columns,
   DerivedColumn,
-  CellRenderers,
+  CellComponents,
   FilterState,
-  FilterRenderers,
+  FilterComponents,
   ColumnAlign,
   partialStringMatch,
   useClientRows,
@@ -81,7 +81,7 @@ export function ColumnFiltering() {
       header: 'Name',
       width: 140,
       getValue: c => c.name,
-      filterRenderer: 'string',
+      filterComponent: 'string',
       filter: partialStringMatch,
     },
     {
@@ -89,7 +89,7 @@ export function ColumnFiltering() {
       header: 'Age',
       width: 140,
       getValue: c => c.age,
-      filterRenderer: 'range',
+      filterComponent: 'range',
       filter: numberRange,
       align: ColumnAlign.End,
     },
@@ -98,8 +98,8 @@ export function ColumnFiltering() {
       header: 'Resident',
       width: 100,
       getValue: c => c.resident,
-      cellRenderer: 'boolean',
-      filterRenderer: 'boolean',
+      cellComponent: 'boolean',
+      filterComponent: 'boolean',
       filter: booleanFilter,
       align: ColumnAlign.End,
     },
@@ -116,7 +116,7 @@ export function ColumnFiltering() {
     filterState,
   });
 
-  const filterRenderers: FilterRenderers<Candidate> = {
+  const filterComponents: FilterComponents<Candidate> = {
     string: column => {
       return (
         <input
@@ -153,9 +153,9 @@ export function ColumnFiltering() {
     },
   };
 
-  const cellRenderers: CellRenderers<Candidate> = {
-    default: (column, row) => column.getValue(row.data),
-    boolean: (column, row) => (
+  const cellComponents: CellComponents<Candidate> = {
+    default: ({ column, row }) => column.getValue(row.data),
+    boolean: ({ column, row }) => (
       <input type="checkbox" readOnly checked={column.getValue(row.data)} />
     ),
   };
@@ -174,8 +174,8 @@ export function ColumnFiltering() {
         columns={columns}
         onColumnsChange={setColumns}
         rows={rows}
-        cellRenderers={cellRenderers}
-        filterRenderers={filterRenderers}
+        cellComponents={cellComponents}
+        filterComponents={filterComponents}
       />
     </>
   );

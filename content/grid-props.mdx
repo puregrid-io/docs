@@ -26,13 +26,13 @@ Puregrid is declarative and controlled by props, there is no imperative API to l
   noRows="Loading..."
   virtualRows
   ssrHeight={800}
-  cellRenderers={cellRenderers}
+  cellComponents={cellComponents}
   wrapCells
-  detailsRowRenderer={(row: DetailsRow<string>) => {
+  DetailsRow={({ row }) => {
     return <div>{row.data}</div>;
   }}
-  groupCellRenderer={groupCellRenderer}
-  filterRenderers={filterRenderers}
+  GroupCell={GroupCell}
+  filterComponents={filterComponents}
   footer={
     <Pagination
       itemCount={data.length}
@@ -67,19 +67,19 @@ You don't pass your data directly into the grid, instead you pass it into `useCl
 
 The only renderer which lives in column definitions is the `header` because it's unlikely to frequently change (e.g. as you type). Other renderers are passed directly into the grid and in the case of cells and filters specified in the column definitions as strings.
 
-### cellRenderers
+### cellComponents
 
 A key-value object of cell renderers, the key is referenced in column definitions and the value is a function which takes a column and row and returns a `ReactNode`. See [Cell Rendering](/cells/cell-rendering).
 
-### groupCellRenderer
+### GroupCell
 
 A renderer function which takes a column and row and returns a `ReactNode` for grouping rows. See [Row Grouping](/rows/row-grouping).
 
-### detailsRowRenderer
+### DetailsRow
 
 A renderer function which is given a details row object and returns a `ReactNode`. See [Master-details rows](/rows/master-details-rows).
 
-### filterRenderers
+### filterComponents
 
 A key-value object of cell renderers, the key is referenced in column definitions and the value is a function which takes a column and row and returns a `ReactNode`. See [Column Filtering](/columns/column-filtering).
 

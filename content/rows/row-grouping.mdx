@@ -39,7 +39,7 @@ If you set `defaultExpandTo` to `-1` it will expand all groups by default.
 The next step is to define a group row renderer.
 
 ```ts:title=Set+group+to+true
-const groupCellRenderer: GroupCellRenderer<Product> = (column, row) => {
+const GroupCell: GroupCellComponent<Product> = (column, row) => {
   // Don't render anything on the group row except in the grouping cell.
   if (column.key !== row.data.colKey) {
     return null;
@@ -68,17 +68,16 @@ Note that rather than use the `expanded` row state we use `row.data.expanded` be
   <RowGrouping />
 </Showcase>
 
-Another nice touch you might notice in the example is to not render values in cells which are grouped.
+Another nice touch you might notice in the example is to not render values in cells which are grouped on normal rows (expand until you see normal rows).
 
-```tsx:title=Don't+render+group+values+in+normal+rows
-// Don't render the grouped values as they can be seen on the grouping rows.
-const cellRenderers: CellRenderers<Winner> = {
-  default: (column, row) => !column.group && column.getValue(row.data),
+```tsx:title=Don't+render+group+columns+in+normal+rows
+const cellComponents: CellComponents<Winner> = {
+  default: ({ column, row }) => !column.group && column.getValue(row.data),
 };
 
 <Grid<Winner>
   defaultColumn={{
-    cellRenderer: 'default',
+    cellComponent: 'default',
   }}
 />;
 ```

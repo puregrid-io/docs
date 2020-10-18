@@ -4,6 +4,7 @@ export * from './ColumnGrouping';
 export * from './ColumnPinning';
 export * from './ColumnSorting';
 export * from './DirectionRtl';
+export * from './MasterDetailsRows';
 export * from './NoBordersTheme';
 export * from './NoRows';
 export * from './PaginationBuiltin';

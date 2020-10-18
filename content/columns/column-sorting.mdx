@@ -3,7 +3,7 @@ title: Column Sorting
 description: An in-depth look at column sorting and customization
 ---
 
-import { Showcase } from '../../src/components';
+import { Showcase, Alert, AlertType } from '../../src/components';
 import { ColumnSorting } from '../../examples';
 
 ## Sorting basics
@@ -39,6 +39,18 @@ Below we set the species to be sorted `Desc` by default. Multi-sort works out th
 <Showcase fileName="ColumnSorting.tsx">
   <ColumnSorting />
 </Showcase>
+<Alert>
+  If you're formatting a number into a currency string for example you're
+  likely to get incorrect results. In this case you should return the raw
+  number to sort in `getValue` as below.
+</Alert>
+
+```ts:title=Return+unformatted+Number+if+source+is+sort
+getValue: (asset, source) =>
+  source !== ValueSource.Sort
+    ? fmtCcy(asset.market_cap_usd)
+    : asset.market_cap_usd;
+```
 
 ## Custom sort functions
 
@@ -62,12 +74,12 @@ function customSortFunction<T>(column: Column<T>, personA: T, personB: T) {
   // Locale aware string sort.
   if (typeof a === 'string') {
     return column.sortDirection === SortDirection.Asc
-      ? collator.compare(b, a)
-      : collator.compare(a, b);
+      ? collator.compare(a, b)
+      : collator.compare(b, a);
   }
 
   // Number/boolean sort.
-  return column.sortDirection === SortDirection.Asc ? b - a : a - b;
+  return column.sortDirection === SortDirection.Asc ? a - b : b - a;
 }
 ```
 

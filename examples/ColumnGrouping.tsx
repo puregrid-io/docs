@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Grid,
   Columns,
-  CellRenderers,
+  CellComponents,
   ColumnAlign,
   Pagination,
   useClientRows,

@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Grid, Columns, CellRenderers, ColumnAlign, useClientRows } from '@puregrid/core';
+import {
+  Grid,
+  Columns,
+  CellComponents,
+  ColumnAlign,
+  useClientRows,
+} from '@puregrid/core';
 
 interface Person {
   name: string;
@@ -41,7 +47,7 @@ export function ColumnAlignment() {
     {
       key: 'gender',
       header: 'Gender',
-      width: 90,
+      width: 100,
       getValue: person => person.gender,
     },
     {

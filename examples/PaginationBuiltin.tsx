@@ -6,6 +6,7 @@ import {
   Pagination,
   useClientRows,
   Direction,
+  ValueSource,
 } from '@puregrid/core';
 import top100cryptos from './top100cryptos.json';
 
@@ -58,7 +59,8 @@ export function PaginationBuiltin() {
       key: 'price',
       header: 'Price (USD)',
       width: 160,
-      getValue: asset => fmtCcy(asset.price_usd),
+      getValue: (asset, source) =>
+        source !== ValueSource.Sort ? fmtCcy(asset.price_usd) : asset.price_usd,
       align: ColumnAlign.End,
     },
     {
@@ -66,14 +68,16 @@ export function PaginationBuiltin() {
       header: 'Market Cap (USD)',
       width: '1fr',
       minWidth: 160,
-      getValue: asset => fmtCcy(asset.market_cap_usd),
+      getValue: (asset, source) =>
+        source !== ValueSource.Sort ? fmtCcy(asset.market_cap_usd) : asset.market_cap_usd,
       align: ColumnAlign.End,
     },
     {
       key: 'volume24',
       header: 'Volume (24h)',
       width: 160,
-      getValue: asset => fmtNum(asset.volume24),
+      getValue: (asset, source) =>
+        source !== ValueSource.Sort ? fmtNum(asset.volume24) : asset.volume24,
       align: ColumnAlign.End,
     },
   ]);

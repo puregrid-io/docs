@@ -3,7 +3,7 @@ title: Header Rendering
 description: How to render more than strings (or translate them)
 ---
 
-The `header` option **must** be a string. If you want to render a custom `ReactNode` or dynamic value then you should implement a renderer in `headerRenderers`.
+The `header` option **must** be a string. If you want to render a custom `ReactNode` or dynamic value then you should implement a renderer in `headerComponents`.
 
 ```tsx:title=Custom+header+rendering
 const [allSelected, setAllSelected] = useState(false);
@@ -16,12 +16,12 @@ const [columns, setColumns] = useState<Columns<Candidate>>([
   },
 ]);
 
-const headerRenderers = {
+const headerComponents = {
   selectAll: () => <input type="checkbox" checked={allSelected} />
 }
 
 <Grid
-  headerRenderers={headerRenderers}
+  headerComponents={headerComponents}
 />
 ```
 
@@ -38,7 +38,7 @@ const [columns, setColumns] = useState<Columns<Candidate>>([
   },
 ]);
 
-const headerRenderers = {
+const headerComponents = {
   Occupation: () => t('Occupation'),
 };
 ```
