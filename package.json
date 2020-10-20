@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@puregrid/themes": "^0.0.1-alpha.0",
-    "gatsby": "^2.24.80",
+    "gatsby": "^2.24.83",
     "gatsby-theme-apollo-docs": "4.5.3",
     "lightweight-charts": "^3.1.5",
     "react": "^16.14.0",
@@ -20,7 +20,9 @@
     "use-resize-observer": "^6.1.0"
   },
   "devDependencies": {
-    "eslint-plugin-react": "^7.21.4",
+    "@types/react": "^16.9.53",
+    "@types/react-dom": "^16.9.8",
+    "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.1.2"
   }
 }

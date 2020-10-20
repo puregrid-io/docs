@@ -3,4 +3,44 @@ title: Virtual rows
 description: Learn how to enable virtual rows, and the pros and cons
 ---
 
-Note that a grid height must be set
+import { Showcase, Alert } from '../../src/components';
+import { VirtualRows } from '../../examples';
+
+## Overview
+
+Virtual rows allow you to only render the rows which are currently visible. It's typically enabled for performance if you don't use traditional pagination, such a having a "Load More" button or loading more rows as the user scrolls down ([Infinite Scrolling](/rows/infinite-scrolling)).
+
+The tradeoff is that you have to fix the row heights upfront. You also might have to make provisions for serverside rendering or headless automated tests to ensure that rows are rendered in those scenarios as the grid needs to calculate its rendered height.
+
+To enable virtual rows set `virtualRows` to true in the Grid props.
+
+```tsx:title=Enable+virtual+rows
+<Grid<YourDataShape> virtualRows />
+```
+
+## Clientside rows
+
+When you're generating rows from data on the client you also need to ensure that rows have a set height:
+
+```ts:title=Enable+virtual+rows
+const rows = useClientRows<YourDataShape>({
+  columns,
+  data,
+  getItemId: item => item.id,
+  // You can return different heights based on the row.type or row.data
+  // that's passed in.
+  getRowSize: () => 40,
+});
+```
+
+<Showcase fileName="VirtualRows.tsx">
+  <VirtualRows />
+</Showcase>
+<Alert>
+  When virtualRows is enabled ensure that the height of the grid is limited
+  either by its container or by setting a height on the grid itself.
+</Alert>
+
+## Serverside rows
+
+The only requisite other than `virtualRows={true}` is that rows should have the `size` field set. See [Serverside Rows](/rows/serverside).

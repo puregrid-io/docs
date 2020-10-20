@@ -62,10 +62,7 @@ Below is an example of a sort function tailored for Chinese (Hong Kong).
 // A collator is far more performant than
 // `String.prototype.localeCompare`, if you don't
 // re-create it every render of course.
-const collator = new Intl.Collator('zh-HK', {
-  numeric: true,
-  sensitivity: 'base',
-});
+const collator = new Intl.Collator('zh-HK');
 
 function customSortFunction<T>(column: Column<T>, personA: T, personB: T) {
   const a = column.getValue(personA) as any;

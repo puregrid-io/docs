@@ -12,4 +12,5 @@ export * from './PaginationCustom';
 export * from './RowGrouping';
 export * from './RowSelection';
 export * from './ThemingWithJS';
+export * from './VirtualRows';
 export * from './YourFirstGrid';

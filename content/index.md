@@ -24,4 +24,6 @@ npm install @puregrid/core
 yarn add @puregrid/core
 ```
 
-Styles are bundled in (with no loss of performance or increased bundle size unlike other CSS-in-JS solutions).
+## A note on code examples
+
+All examples in the documentation are using Typescript. If you're using vanilla JavaScript omit the types. Enums should still be used however, so when you see things like `SortDirection.Desc` you should still import and use `SortDirection`.

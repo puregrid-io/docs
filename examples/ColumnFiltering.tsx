@@ -7,7 +7,6 @@ import {
   FilterState,
   FilterComponents,
   ColumnAlign,
-  partialStringMatch,
   useClientRows,
 } from '@puregrid/core';
 
@@ -82,7 +81,7 @@ export function ColumnFiltering() {
       width: 140,
       getValue: c => c.name,
       filterComponent: 'string',
-      filter: partialStringMatch,
+      filter: 'partialStringMatch',
     },
     {
       key: 'age',
@@ -90,7 +89,7 @@ export function ColumnFiltering() {
       width: 140,
       getValue: c => c.age,
       filterComponent: 'range',
-      filter: numberRange,
+      filter: 'numberRange',
       align: ColumnAlign.End,
     },
     {
@@ -100,7 +99,7 @@ export function ColumnFiltering() {
       getValue: c => c.resident,
       cellComponent: 'boolean',
       filterComponent: 'boolean',
-      filter: booleanFilter,
+      filter: 'booleanFilter',
       align: ColumnAlign.End,
     },
   ]);
@@ -108,16 +107,20 @@ export function ColumnFiltering() {
   const [globalFilter, setGlobalFilter] = useState('');
   const [filterState, setFilterState] = useState<FilterState>({});
 
+  console.log({ filterState });
+
   const rows = useClientRows<Candidate>({
     columns,
     data,
     getItemId: c => c.name,
     globalFilter,
     filterState,
+    filterMethods: { numberRange, booleanFilter },
   });
 
   const filterComponents: FilterComponents<Candidate> = {
-    string: column => {
+    string: ({ column }) => {
+      console.log('string:', column.key);
       return (
         <input
           value={(filterState[column.key] as string) || ''}
@@ -126,7 +129,8 @@ export function ColumnFiltering() {
         />
       );
     },
-    range: column => {
+    range: ({ column }) => {
+      console.log('range:', column.key);
       return (
         <input
           type="range"
@@ -139,7 +143,8 @@ export function ColumnFiltering() {
         />
       );
     },
-    boolean: column => {
+    boolean: ({ column }) => {
+      console.log('boolean:', column.key);
       return (
         <select
           value={String(filterState[column.key]) || ''}

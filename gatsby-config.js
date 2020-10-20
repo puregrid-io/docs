@@ -22,6 +22,7 @@ module.exports = {
           Rows: [
             'rows/row-state',
             'rows/pagination',
+            'rows/infinite-scrolling',
             'rows/row-grouping',
             'rows/master-details-rows',
             'rows/virtual-rows',
