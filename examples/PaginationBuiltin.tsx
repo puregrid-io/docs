@@ -89,7 +89,6 @@ export function PaginationBuiltin() {
     columns,
     data: top100cryptos.data,
     getItemId: asset => asset.id,
-    getRowSize: () => 40,
     pageIndex,
     pageSize,
   });
@@ -107,6 +106,7 @@ export function PaginationBuiltin() {
         columns={columns}
         onColumnsChange={setColumns}
         rows={rows}
+        getRowSize={() => 40}
         footer={
           <Pagination
             direction={direction}

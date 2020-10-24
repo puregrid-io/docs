@@ -7,7 +7,7 @@ import {
   Columns,
   ColumnAlign,
   useClientRows,
-  HeaderComponents,
+  HeaderRenderers,
 } from '@puregrid/core';
 import olympicWinners from './olympicWinnersSmall.json';
 
@@ -99,10 +99,9 @@ export function VirtualRows() {
     columns,
     data: olympicWinners,
     getItemId: winner => winner.id,
-    getRowSize: () => 40,
   });
 
-  const headerComponents: HeaderComponents<Winner> = {
+  const headerRenderers: HeaderRenderers<Winner> = {
     Gold: () => <FaMedal />,
     Silver: () => <BiMedal />,
     Bronze: () => <RiMedal2Line />,
@@ -113,8 +112,9 @@ export function VirtualRows() {
       style={{ height: 400 }}
       columns={columns}
       onColumnsChange={setColumns}
-      headerComponents={headerComponents}
+      headerRenderers={headerRenderers}
       rows={rows}
+      getRowSize={() => 40}
       virtualRows
     />
   );

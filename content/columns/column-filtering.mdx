@@ -83,18 +83,16 @@ Instead you should define an object of renderers, as well as your own state to s
 ```ts:title=Defining+filter+renderers
 const [filterState, setFilterState] = useState<FilterState>({});
 
-const filterComponents: FilterComponents<Product> = {
-  string: column => {
-    return (
-      <input
-        value={(filterState[column.key] as string) || ''}
-        placeholder="Filter"
-        onChange={e =>
-          setFilterState(s => ({ ...s, [column.key]: e.target.value }))
-        }
-      />
-    );
-  },
+const filterRenderers: FilterRenderers<Product> = {
+  string: ({ column }) => (
+    <input
+      value={(filterState[column.key] as string) || ''}
+      placeholder="Filter"
+      onChange={e =>
+        setFilterState(s => ({ ...s, [column.key]: e.target.value }))
+      }
+    />
+  ),
 };
 ```
 
@@ -103,7 +101,7 @@ And then pass them into the `Grid`:
 ```tsx:title=Pass+the+filter+renderers+into+the+Grid
 <Grid
   // ...
-  filterComponents={filterComponents}
+  filterRenderers={filterRenderers}
 />
 ```
 

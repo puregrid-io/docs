@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Grid,
-  Columns,
-  CellComponents,
-  ColumnAlign,
-  Pagination,
-  useClientRows,
-} from '@puregrid/core';
+import { Grid, Columns, ColumnAlign, Pagination, useClientRows } from '@puregrid/core';
 
 interface Product {
   ProductID: number;
@@ -97,7 +90,6 @@ export function ColumnGrouping() {
     columns,
     data,
     getItemId: product => product.ProductID,
-    getRowSize: () => 40,
     pageIndex,
     pageSize,
   });
@@ -117,6 +109,7 @@ export function ColumnGrouping() {
       columns={columns}
       onColumnsChange={setColumns}
       rows={rows}
+      getRowSize={() => 40}
       footer={
         <Pagination
           itemCount={data.length}

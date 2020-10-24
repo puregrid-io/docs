@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Grid,
-  Columns,
-  CellComponents,
-  ColumnAlign,
-  useClientRows,
-} from '@puregrid/core';
+import { Grid, Columns, CellRenderers, ColumnAlign, useClientRows } from '@puregrid/core';
 
 interface Person {
   name: string;

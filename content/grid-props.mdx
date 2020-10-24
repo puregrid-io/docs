@@ -25,14 +25,15 @@ Puregrid is declarative and controlled by props, there is no imperative API to l
   rows={rows}
   noRows="Loading..."
   virtualRows
+  getRowSize={() => 40}
   ssrHeight={800}
-  cellComponents={cellComponents}
+  cellRenderers={cellRenderers}
   wrapCells
   DetailsRow={({ row }) => {
     return <div>{row.data}</div>;
   }}
   GroupCell={GroupCell}
-  filterComponents={filterComponents}
+  filterRenderers={filterRenderers}
   footer={
     <Pagination
       itemCount={data.length}
@@ -67,7 +68,7 @@ You don't pass your data directly into the grid, instead you pass it into `useCl
 
 The only renderer which lives in column definitions is the `header` because it's unlikely to frequently change (e.g. as you type). Other renderers are passed directly into the grid and in the case of cells and filters specified in the column definitions as strings.
 
-### cellComponents
+### cellRenderers
 
 A key-value object of cell renderers, the key is referenced in column definitions and the value is a function which takes a column and row and returns a `ReactNode`. See [Cell Rendering](/cells/cell-rendering).
 
@@ -79,30 +80,34 @@ A renderer function which takes a column and row and returns a `ReactNode` for g
 
 A renderer function which is given a details row object and returns a `ReactNode`. See [Master-details rows](/rows/master-details-rows).
 
-### filterComponents
+### filterRenderers
 
 A key-value object of cell renderers, the key is referenced in column definitions and the value is a function which takes a column and row and returns a `ReactNode`. See [Column Filtering](/columns/column-filtering).
 
-## No Rows
+## noRows
 
-`noRows` prop allows you to render something custom when there are no rows such as a loading spinner or a message (or both). It defaults to `null` and any `ReactNode` is permitted.
+Allows you to render something custom when there are no rows such as a loading spinner or a message (or both). It defaults to `null` and any `ReactNode` is permitted.
 
 <Showcase fileName="NoRows.tsx">
   <NoRows />
 </Showcase>
 
-## Virtual Rows
+## virtualRows
 
 You can toggle on virtual rows so that only rows in view are rendered. Rows must have a fixed height when using this option. See [Virtual Rows](/rows/virtual-rows).
 
-## Direction
+## getRowSize
+
+Set the row height. You are passed the row so can adjust the height based on the type (a normal row, groping row, or details row), or even the row data. This **must** be set when passing `virtualRows` into the `Grid`. See [Virtual Rows](rows/virtual-rows).
+
+## direction
 
 You can orient the grid for RTL (Right to left languages) with the `direction` prop. See [RTL (Right to left)](/rtl).
 
-## Theme
+## theme
 
 You can pass a JS object for theming as an alternative to CSS Variables. See [Styling](/styling)
 
-## Footer
+## footer
 
 You can pass any `ReactNode` to `footer`, checkout [Pagination](/rows/pagination) for an example.

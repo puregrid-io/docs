@@ -3,9 +3,9 @@ import {
   Grid,
   Columns,
   DerivedColumn,
-  CellComponents,
+  CellRenderers,
   FilterState,
-  FilterComponents,
+  FilterRenderers,
   ColumnAlign,
   useClientRows,
 } from '@puregrid/core';
@@ -80,7 +80,7 @@ export function ColumnFiltering() {
       header: 'Name',
       width: 140,
       getValue: c => c.name,
-      filterComponent: 'string',
+      filterRenderer: 'string',
       filter: 'partialStringMatch',
     },
     {
@@ -88,7 +88,7 @@ export function ColumnFiltering() {
       header: 'Age',
       width: 140,
       getValue: c => c.age,
-      filterComponent: 'range',
+      filterRenderer: 'range',
       filter: 'numberRange',
       align: ColumnAlign.End,
     },
@@ -97,8 +97,8 @@ export function ColumnFiltering() {
       header: 'Resident',
       width: 100,
       getValue: c => c.resident,
-      cellComponent: 'boolean',
-      filterComponent: 'boolean',
+      cellRenderer: 'boolean',
+      filterRenderer: 'boolean',
       filter: 'booleanFilter',
       align: ColumnAlign.End,
     },
@@ -106,8 +106,6 @@ export function ColumnFiltering() {
 
   const [globalFilter, setGlobalFilter] = useState('');
   const [filterState, setFilterState] = useState<FilterState>({});
-
-  console.log({ filterState });
 
   const rows = useClientRows<Candidate>({
     columns,
@@ -118,47 +116,38 @@ export function ColumnFiltering() {
     filterMethods: { numberRange, booleanFilter },
   });
 
-  const filterComponents: FilterComponents<Candidate> = {
-    string: ({ column }) => {
-      console.log('string:', column.key);
-      return (
-        <input
-          value={(filterState[column.key] as string) || ''}
-          placeholder="Filter"
-          onChange={e => setFilterState(s => ({ ...s, [column.key]: e.target.value }))}
-        />
-      );
-    },
-    range: ({ column }) => {
-      console.log('range:', column.key);
-      return (
-        <input
-          type="range"
-          min="0"
-          max="130"
-          value={filterState[column.key] ? String(filterState[column.key][0]) : '0'}
-          onChange={e =>
-            setFilterState(s => ({ ...s, [column.key]: [Number(e.target.value), 130] }))
-          }
-        />
-      );
-    },
-    boolean: ({ column }) => {
-      console.log('boolean:', column.key);
-      return (
-        <select
-          value={String(filterState[column.key]) || ''}
-          onChange={e => setFilterState(s => ({ ...s, [column.key]: e.target.value }))}
-        >
-          <option value="">All</option>
-          <option value="1">True</option>
-          <option value="0">False</option>
-        </select>
-      );
-    },
+  const filterRenderers: FilterRenderers<Candidate> = {
+    string: ({ column }) => (
+      <input
+        value={(filterState[column.key] as string) || ''}
+        placeholder="Filter"
+        onChange={e => setFilterState(s => ({ ...s, [column.key]: e.target.value }))}
+      />
+    ),
+    range: ({ column }) => (
+      <input
+        type="range"
+        min="0"
+        max="130"
+        value={filterState[column.key] ? String(filterState[column.key][0]) : '0'}
+        onChange={e =>
+          setFilterState(s => ({ ...s, [column.key]: [Number(e.target.value), 130] }))
+        }
+      />
+    ),
+    boolean: ({ column }) => (
+      <select
+        value={String(filterState[column.key]) || ''}
+        onChange={e => setFilterState(s => ({ ...s, [column.key]: e.target.value }))}
+      >
+        <option value="">All</option>
+        <option value="1">True</option>
+        <option value="0">False</option>
+      </select>
+    ),
   };
 
-  const cellComponents: CellComponents<Candidate> = {
+  const cellRenderers: CellRenderers<Candidate> = {
     default: ({ column, row }) => column.getValue(row.data),
     boolean: ({ column, row }) => (
       <input type="checkbox" readOnly checked={column.getValue(row.data)} />
@@ -179,8 +168,8 @@ export function ColumnFiltering() {
         columns={columns}
         onColumnsChange={setColumns}
         rows={rows}
-        cellComponents={cellComponents}
-        filterComponents={filterComponents}
+        cellRenderers={cellRenderers}
+        filterRenderers={filterRenderers}
       />
     </>
   );

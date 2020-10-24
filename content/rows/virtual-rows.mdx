@@ -22,15 +22,13 @@ To enable virtual rows set `virtualRows` to true in the Grid props.
 
 When you're generating rows from data on the client you also need to ensure that rows have a set height:
 
-```ts:title=Enable+virtual+rows
-const rows = useClientRows<YourDataShape>({
-  columns,
-  data,
-  getItemId: item => item.id,
+```tsx:title=Enable+virtual+rows
+<Grid<YourDataShape>
+  virtualRows
   // You can return different heights based on the row.type or row.data
   // that's passed in.
-  getRowSize: () => 40,
-});
+  getRowSize={() => 40}
+/>
 ```
 
 <Showcase fileName="VirtualRows.tsx">

@@ -8,9 +8,9 @@ import {
   Columns,
   ColumnAlign,
   useClientRows,
-  HeaderComponents,
+  HeaderRenderers,
   GroupCellComponent,
-  CellComponents,
+  CellRenderers,
   useRowState,
 } from '@puregrid/core';
 import olympicWinners from './olympicWinnersSmall.json';
@@ -106,11 +106,10 @@ export function RowGrouping() {
     columns,
     data: olympicWinners,
     getItemId: winner => winner.id,
-    getRowSize: () => 40,
     rowState: getRowState(),
   });
 
-  const headerComponents: HeaderComponents<Winner> = {
+  const headerRenderers: HeaderRenderers<Winner> = {
     Gold: () => <FaMedal />,
     Silver: () => <BiMedal />,
     Bronze: () => <RiMedal2Line />,
@@ -136,7 +135,7 @@ export function RowGrouping() {
   };
 
   // Don't render the grouped values as they can be seen on the grouping rows.
-  const cellComponents: CellComponents<Winner> = {
+  const cellRenderers: CellRenderers<Winner> = {
     default: ({ column, row }) => !column.group && column.getValue(row.data),
   };
 
@@ -145,13 +144,14 @@ export function RowGrouping() {
       style={{ height: 600 }}
       columns={columns}
       onColumnsChange={setColumns}
-      headerComponents={headerComponents}
+      headerRenderers={headerRenderers}
       GroupCell={GroupCell}
-      cellComponents={cellComponents}
+      cellRenderers={cellRenderers}
       defaultColumn={{
-        cellComponent: 'default',
+        cellRenderer: 'default',
       }}
       rows={rows}
+      getRowSize={() => 40}
       virtualRows
     />
   );

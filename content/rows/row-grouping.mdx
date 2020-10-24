@@ -71,13 +71,13 @@ Note that rather than use the `expanded` row state we use `row.data.expanded` be
 Another nice touch you might notice in the example is to not render values in cells which are grouped on normal rows (expand until you see normal rows).
 
 ```tsx:title=Don't+render+group+columns+in+normal+rows
-const cellComponents: CellComponents<Winner> = {
+const cellRenderers: CellRenderers<Winner> = {
   default: ({ column, row }) => !column.group && column.getValue(row.data),
 };
 
 <Grid<Winner>
   defaultColumn={{
-    cellComponent: 'default',
+    cellRenderer: 'default',
   }}
 />;
 ```

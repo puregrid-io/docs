@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   Grid,
   Columns,
-  CellComponents,
+  CellRenderers,
   ColumnAlign,
   useClientRows,
   SortDirection,

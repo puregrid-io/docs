@@ -9,7 +9,7 @@ import {
   RowType,
   DetailsRow,
   useRowState,
-  CellComponents,
+  CellRenderers,
 } from '@puregrid/core';
 import stocks from './stocks.json';
 
@@ -121,7 +121,7 @@ export function MasterDetailsRows() {
       header: null,
       width: 44,
       getValue: stock => getRowState(stock.metaData.symbol).expanded,
-      cellComponent: 'expandRow',
+      cellRenderer: 'expandRow',
       pinned: true,
     },
     {
@@ -149,15 +149,11 @@ export function MasterDetailsRows() {
     columns,
     data: stocks,
     getItemId: stock => stock.metaData.symbol,
-    // You don't have to specify getRowSize unless you use virtualRows,
-    // if you do specify it then you're likely to want a different height
-    // for details rows.
-    getRowSize: row => (row.type === RowType.DetailsRow ? 301 : 40),
     getRowDetails: row => row.timeSeries,
     rowState: getRowState(),
   });
 
-  const cellComponents: CellComponents<Stock> = {
+  const cellRenderers: CellRenderers<Stock> = {
     expandRow: ({ row }) => {
       const { expanded } = getRowState(row.key);
       return (
@@ -177,8 +173,12 @@ export function MasterDetailsRows() {
       columns={columns}
       onColumnsChange={setColumns}
       rows={rows}
+      // You don't have to specify getRowSize unless you use virtualRows,
+      // if you do specify it then you're likely to want a different height
+      // for details rows.
+      getRowSize={row => (row.type === RowType.DetailsRow ? 301 : 40)}
       DetailsRow={PriceChart}
-      cellComponents={cellComponents}
+      cellRenderers={cellRenderers}
     />
   );
 }

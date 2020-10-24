@@ -78,7 +78,6 @@ export function PaginationCustom() {
     columns,
     data: top100cryptos.data,
     getItemId: asset => asset.id,
-    getRowSize: () => 40,
     pageIndex,
     pageSize,
   });
@@ -88,6 +87,7 @@ export function PaginationCustom() {
       columns={columns}
       onColumnsChange={setColumns}
       rows={rows}
+      getRowSize={() => 40}
       footer={
         <>
           <button onClick={() => setPageIndex(pageIndex - 1)} disabled={pageIndex === 0}>

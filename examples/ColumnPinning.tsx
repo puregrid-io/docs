@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Grid,
-  Columns,
-  CellComponents,
-  ColumnAlign,
-  useClientRows,
-} from '@puregrid/core';
+import { Grid, Columns, CellRenderers, ColumnAlign, useClientRows } from '@puregrid/core';
 
 interface ImportantData {
   id: number;
@@ -56,7 +50,7 @@ export function ColumnPinning() {
       header: 'Kill it',
       width: 64,
       getValue: d => d.killSwitch,
-      cellComponent: 'checkbox',
+      cellRenderer: 'checkbox',
       align: ColumnAlign.Center,
       pinned: true,
     },
@@ -75,7 +69,7 @@ export function ColumnPinning() {
     getItemId: d => d.id,
   });
 
-  const cellComponents: CellComponents = {
+  const cellRenderers: CellRenderers = {
     checkbox: ({ column, row }) => (
       <input type="checkbox" readOnly value={column.getValue(row.data)} />
     ),
@@ -86,7 +80,7 @@ export function ColumnPinning() {
       columns={columns}
       onColumnsChange={setColumns}
       rows={rows}
-      cellComponents={cellComponents}
+      cellRenderers={cellRenderers}
     />
   );
 }

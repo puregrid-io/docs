@@ -20,13 +20,13 @@ module.exports = {
             'columns/column-filtering',
           ],
           Rows: [
+            'rows/client-vs-server-rows',
             'rows/row-state',
             'rows/pagination',
             'rows/infinite-scrolling',
             'rows/row-grouping',
             'rows/master-details-rows',
             'rows/virtual-rows',
-            'rows/serverside-rows',
           ],
           Cells: [
             'cells/cell-rendering',

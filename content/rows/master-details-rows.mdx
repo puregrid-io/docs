@@ -17,10 +17,6 @@ const rows = useClientRows<Stock>({
   columns,
   data,
   getItemId: stock => stock.symbol,
-  // You don't have to specify getRowSize unless you use virtualRows,
-  // if you do specify it then you're likely to want a different height
-  // for details rows.
-  getRowSize: row => (row.type === RowType.DetailsRow ? 200 : 46),
   getRowDetails: row => {
     if (row.data.symbol === 'APPL') {
       return row.data.timeSeries;
