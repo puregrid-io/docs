@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Grid,
-  Columns,
-  CellRenderers,
+  useColumns,
   ColumnAlign,
   useClientRows,
   SortDirection,
@@ -32,8 +31,8 @@ const data: Animal[] = [
   },
 ];
 
-export function ColumnSorting() {
-  const [columns, setColumns] = useState<Columns<Animal>>([
+export function ClientColumnSorting() {
+  const { columns, setColumns } = useColumns<Animal>([
     {
       key: 'species',
       header: 'Species',

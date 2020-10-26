@@ -23,7 +23,7 @@ Puregrid is declarative and controlled by props, there is no imperative API to l
   }}
   onColumnsChange={setColumns}
   rows={rows}
-  noRows="Loading..."
+  noRowsNode="Loading..."
   virtualRows
   getRowSize={() => 40}
   ssrHeight={800}
@@ -84,7 +84,7 @@ A renderer function which is given a details row object and returns a `ReactNode
 
 A key-value object of cell renderers, the key is referenced in column definitions and the value is a function which takes a column and row and returns a `ReactNode`. See [Column Filtering](/columns/column-filtering).
 
-## noRows
+## noRowsNode
 
 Allows you to render something custom when there are no rows such as a loading spinner or a message (or both). It defaults to `null` and any `ReactNode` is permitted.
 

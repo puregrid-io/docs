@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import {
   Grid,
-  Columns,
+  useColumns,
   ColumnAlign,
   Pagination,
   useClientRows,
   Direction,
   ValueSource,
 } from '@puregrid/core';
-import top100cryptos from './top100cryptos.json';
+import top100cryptos from '../static/top100cryptos.json';
 
 interface DigitalAsset {
   id: string;
@@ -35,7 +35,7 @@ const fmtCcy = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'US
 const fmtNum = new Intl.NumberFormat('en-US').format;
 
 export function PaginationBuiltin() {
-  const [columns, setColumns] = useState<Columns<DigitalAsset>>([
+  const { columns, setColumns } = useColumns<DigitalAsset>([
     {
       key: 'rank',
       header: 'Rank',

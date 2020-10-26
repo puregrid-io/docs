@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Grid, Columns, Direction, useClientRows } from '@puregrid/core';
+import React from 'react';
+import { Grid, useColumns, Direction, useClientRows } from '@puregrid/core';
 
 interface Country {
   code: string;
@@ -46,7 +46,7 @@ const data: Country[] = [
 ];
 
 export function DirectionRtl() {
-  const [columns, setColumns] = useState<Columns<Country>>([
+  const { columns, setColumns } = useColumns<Country>([
     {
       key: 'code',
       header: 'Code',

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { GrLocation } from 'react-icons/gr';
 import {
   Grid,
-  Columns,
+  useColumns,
   useClientRows,
   HeaderRenderers,
   HeaderProps,
@@ -37,7 +37,7 @@ function BoldUnderline({ column }: HeaderProps<Person>) {
 }
 
 export function HeaderRendering() {
-  const [columns, setColumns] = useState<Columns<Person>>([
+  const { columns, setColumns } = useColumns<Person>([
     {
       key: 'name',
       header: 'Name',

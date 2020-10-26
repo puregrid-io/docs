@@ -4,7 +4,7 @@ description: An in-depth look at column sorting and customization
 ---
 
 import { Showcase, Alert, AlertType } from '../../src/components';
-import { ColumnSorting } from '../../examples';
+import { ClientColumnSorting, ServersideRows } from '../../examples';
 
 ## Sorting basics
 
@@ -34,15 +34,17 @@ const columns = [
 ];
 ```
 
+## Clientside Sorting
+
 Below we set the species to be sorted `Desc` by default. Multi-sort works out the box, try sorting `Age` and notice how it changes the two `Aardvark` entries.
 
-<Showcase fileName="ColumnSorting.tsx">
-  <ColumnSorting />
+<Showcase fileName="ClientColumnSorting.tsx">
+  <ClientColumnSorting />
 </Showcase>
 <Alert>
-  If you're formatting a number into a currency string for example you're
+  If you're formatting a number into a currency string for example, you're
   likely to get incorrect results. In this case you should return the raw
-  number to sort in `getValue` as below.
+  number to sort in `getValue` like below.
 </Alert>
 
 ```ts:title=Return+unformatted+Number+if+source+is+sort
@@ -52,7 +54,7 @@ getValue: (asset, source) =>
     : asset.market_cap_usd;
 ```
 
-## Custom sort functions
+### Custom sort functions
 
 The default sort function can't cover all cases, for example there are nuances in different languages. If you have specific needs you can write your own sort functions.
 
@@ -82,12 +84,32 @@ function customSortFunction<T>(column: Column<T>, personA: T, personB: T) {
 
 To use your custom sort function you can either specify it in `defaultColumn` for all columns as described in [Column Basics](/columns/column-basics/#default-definitions), or pass it into specific columns:
 
-```ts:title=Passing+custom+sort+into+a+column
+```ts:title=Passing+custom+sort+STRING+into+a+column
 const columns = [
   {
     key: 'name',
     header: 'Name',
-    sort: customSortFunction,
+    sort: 'customSortFunction',
   },
 ];
 ```
+
+Next for clientside sorting you need to specify what the sort string maps to and pass it into `useClientRows`:
+
+```ts:title=Passing+custom+sort+into+a+column
+const rows = useClientRows<Person>({
+  columns,
+  data,
+  sortMethods: {
+    customSortFunction,
+  },
+});
+```
+
+## Serverside sorting
+
+You can find an example of serverside sorting in the ServersideRows example.
+
+<Showcase fileName="ServersideRows.tsx">
+  <ServersideRows />
+</Showcase>

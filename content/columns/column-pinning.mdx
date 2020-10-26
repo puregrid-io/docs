@@ -9,7 +9,7 @@ import { ColumnPinning } from '../../examples';
 You can pin any column with the `pinned: true` option, there is no stipulation that the column has to be on the far right or left. When it touches either side of the grid edge it will stick there.
 
 ```ts:title=Pinning+a+column
-const [columns, setColumns] = useState<Columns<ImportantData>>([
+const { columns, setColumns } = useColumns<ImportantData>([
   {
     key: 'id',
     header: 'ID',

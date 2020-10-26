@@ -49,7 +49,7 @@ export default function YourFirstGrid() {
   // A column setter is optional if you don't want resizing, sorting,
   // or reordering, in that case you can put this outside render or
   // in a useMemo (useMemo is more efficient than useRef).
-  const [columns, setColumns] = useState<Columns<Person>>([
+  const { columns, setColumns } = useColumns<Person>([
     {
       // Column keys **must** be unique across all columns.
       key: 'name',

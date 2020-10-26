@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Grid, Columns, ColumnAlign, useClientRows } from '@puregrid/core';
+import React from 'react';
+import { Grid, useColumns, ColumnAlign, useClientRows } from '@puregrid/core';
 import { Theme, umbraTheme } from '@puregrid/themes';
 
 interface Person {
@@ -33,7 +33,7 @@ const data: Person[] = [
 
 export function ThemingWithJS() {
   // A column setter is optional if you don't want resizing, sorting, or reordering.
-  const [columns, setColumns] = useState<Columns<Person>>([
+  const { columns, setColumns } = useColumns<Person>([
     {
       // Column keys must be unique.
       key: 'name',

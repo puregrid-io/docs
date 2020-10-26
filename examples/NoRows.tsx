@@ -22,7 +22,7 @@ export function NoRows() {
       columns={columns}
       onColumnsChange={setColumns}
       rows={[]}
-      noRows={<div>No rows to display 😔</div>}
+      noRowsNode={<div>No rows to display 😔</div>}
     />
   );
 }

@@ -1,5 +1,11 @@
-import React, { useState } from 'react';
-import { Grid, Columns, CellRenderers, ColumnAlign, useClientRows } from '@puregrid/core';
+import React from 'react';
+import {
+  Grid,
+  useColumns,
+  CellRenderers,
+  ColumnAlign,
+  useClientRows,
+} from '@puregrid/core';
 
 interface ImportantData {
   id: number;
@@ -31,7 +37,7 @@ const data: ImportantData[] = [
 ];
 
 export function ColumnPinning() {
-  const [columns, setColumns] = useState<Columns<ImportantData>>([
+  const { columns, setColumns } = useColumns<ImportantData>([
     {
       key: 'id',
       header: 'ID',

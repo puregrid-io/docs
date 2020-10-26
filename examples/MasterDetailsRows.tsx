@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { createChart, IChartApi } from 'lightweight-charts';
 import useResizeObserver from 'use-resize-observer';
 import { AiOutlineRight, AiOutlineDown } from 'react-icons/ai';
 import {
   Grid,
-  Columns,
+  useColumns,
   useClientRows,
   RowType,
   DetailsRow,
   useRowState,
   CellRenderers,
 } from '@puregrid/core';
-import stocks from './stocks.json';
+import stocks from '../static/stocks.json';
 
 type TimeSeries = {
   [key: string]: {
@@ -115,7 +115,7 @@ export function MasterDetailsRows() {
       expanded: true,
     },
   });
-  const [columns, setColumns] = useState<Columns<Stock>>([
+  const { columns, setColumns } = useColumns<Stock>([
     {
       key: 'expandRow',
       header: null,

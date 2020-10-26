@@ -9,7 +9,7 @@ import { ColumnGrouping } from '../../examples';
 Columns can be logically grouped. There is a special `ColumnGroup` type for this, it has a subset of column options and also a `children` array. A definition in the `columns` array can be either type.
 
 ```ts
-const [columns, setColumns] = useState<Columns<Product>>([
+const { columns, setColumns } = useColumns<Product>([
   {
     // This is a ColumnGroup.
     key: 'productInfo',

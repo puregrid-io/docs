@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import {
   Grid,
-  Columns,
+  useColumns,
   DerivedColumn,
   CellRenderers,
-  FilterState,
   FilterRenderers,
   ColumnAlign,
   useClientRows,
+  useFilterState,
 } from '@puregrid/core';
 
 interface Candidate {
@@ -59,22 +59,13 @@ const data: Candidate[] = [
   },
 ];
 
-function numberRange<T>(
-  column: DerivedColumn<T>,
-  item: T,
-  filterValue: [number, number]
-) {
-  const value = column.getValue(item) as number;
-  return value >= filterValue[0] && value <= filterValue[1];
-}
-
 function booleanFilter<T>(column: DerivedColumn<T>, item: T, filterValue: string) {
   const value = column.getValue(item) as boolean;
   return !filterValue || value === Boolean(Number(filterValue));
 }
 
 export function ColumnFiltering() {
-  const [columns, setColumns] = useState<Columns<Candidate>>([
+  const { columns, setColumns } = useColumns<Candidate>([
     {
       key: 'name',
       header: 'Name',
@@ -88,8 +79,8 @@ export function ColumnFiltering() {
       header: 'Age',
       width: 140,
       getValue: c => c.age,
-      filterRenderer: 'range',
-      filter: 'numberRange',
+      filterRenderer: 'number',
+      filter: 'exactMatch',
       align: ColumnAlign.End,
     },
     {
@@ -105,40 +96,37 @@ export function ColumnFiltering() {
   ]);
 
   const [globalFilter, setGlobalFilter] = useState('');
-  const [filterState, setFilterState] = useState<FilterState>({});
+  const { setFilterState, getFilterState } = useFilterState();
 
   const rows = useClientRows<Candidate>({
     columns,
     data,
     getItemId: c => c.name,
     globalFilter,
-    filterState,
-    filterMethods: { numberRange, booleanFilter },
+    filterState: getFilterState(),
+    filterMethods: { booleanFilter },
   });
 
   const filterRenderers: FilterRenderers<Candidate> = {
     string: ({ column }) => (
       <input
-        value={(filterState[column.key] as string) || ''}
+        value={getFilterState(column.key)}
         placeholder="Filter"
-        onChange={e => setFilterState(s => ({ ...s, [column.key]: e.target.value }))}
+        onChange={e => setFilterState(column.key, e.target.value)}
       />
     ),
-    range: ({ column }) => (
+    number: ({ column }) => (
       <input
-        type="range"
+        type="number"
         min="0"
-        max="130"
-        value={filterState[column.key] ? String(filterState[column.key][0]) : '0'}
-        onChange={e =>
-          setFilterState(s => ({ ...s, [column.key]: [Number(e.target.value), 130] }))
-        }
+        value={String(getFilterState(column.key))}
+        onChange={e => setFilterState(column.key, Number(e.target.value))}
       />
     ),
     boolean: ({ column }) => (
       <select
-        value={String(filterState[column.key]) || ''}
-        onChange={e => setFilterState(s => ({ ...s, [column.key]: e.target.value }))}
+        value={getFilterState(column.key)}
+        onChange={e => setFilterState(column.key, e.target.value)}
       >
         <option value="">All</option>
         <option value="1">True</option>

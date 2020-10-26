@@ -12,7 +12,7 @@ The `header` option **must** be a string. If you want to render a custom `ReactN
 
 ```tsx:title=Custom+header+rendering
 const [allSelected, setAllSelected] = useState(false);
-const [columns, setColumns] = useState<Columns<Candidate>>([
+const { columns, setColumns } = useColumns<Candidate>([
   {
     key: 'rowSelected',
     header: 'selectAll',
@@ -20,7 +20,7 @@ const [columns, setColumns] = useState<Columns<Candidate>>([
   },
 ]);
 
-const headerRenderers: HeaderRenderers<Person> = {
+const headerRenderers: HeaderRenderers<Candidate> = {
   selectAll: () => <input type="checkbox" checked={allSelected} />
 }
 
@@ -34,7 +34,7 @@ See this in action on the [Row Selection](/rows/row-selection) demo.
 Similarly if you want to support translations in the header you can follow the same process by using the `header` values to lookup translations:
 
 ```tsx:title=Translating+headers
-const [columns, setColumns] = useState<Columns<Candidate>>([
+const { columns, setColumns } = useColumns<Candidate>([
   {
     key: 'occupation',
     header: 'Occupation',
@@ -42,7 +42,7 @@ const [columns, setColumns] = useState<Columns<Candidate>>([
   },
 ]);
 
-const headerRenderers: HeaderRenderers<Person> = {
+const headerRenderers: HeaderRenderers<Candidate> = {
   Occupation: () => t('Occupation'),
 };
 ```

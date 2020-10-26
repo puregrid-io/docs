@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
-import { Grid, Columns, ColumnAlign, Pagination, useClientRows } from '@puregrid/core';
-import top100cryptos from './top100cryptos.json';
+import {
+  Grid,
+  useColumns,
+  ColumnAlign,
+  useClientRows,
+  ValueSource,
+} from '@puregrid/core';
+import top100cryptos from '../static/top100cryptos.json';
 
 interface DigitalAsset {
   id: string;
@@ -27,7 +33,7 @@ const fmtCcy = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'US
 const fmtNum = new Intl.NumberFormat('en-US').format;
 
 export function PaginationCustom() {
-  const [columns, setColumns] = useState<Columns<DigitalAsset>>([
+  const { columns, setColumns } = useColumns<DigitalAsset>([
     {
       key: 'rank',
       header: 'Rank',
@@ -51,7 +57,8 @@ export function PaginationCustom() {
       key: 'price',
       header: 'Price (USD)',
       width: 160,
-      getValue: asset => fmtCcy(asset.price_usd),
+      getValue: (asset, source) =>
+        source !== ValueSource.Sort ? fmtCcy(asset.price_usd) : asset.price_usd,
       align: ColumnAlign.End,
     },
     {
@@ -59,14 +66,16 @@ export function PaginationCustom() {
       header: 'Market Cap (USD)',
       width: '1fr',
       minWidth: 160,
-      getValue: asset => fmtCcy(asset.market_cap_usd),
+      getValue: (asset, source) =>
+        source !== ValueSource.Sort ? fmtCcy(asset.market_cap_usd) : asset.market_cap_usd,
       align: ColumnAlign.End,
     },
     {
       key: 'volume24',
       header: 'Volume (24h)',
       width: 160,
-      getValue: asset => fmtNum(asset.volume24),
+      getValue: (asset, source) =>
+        source !== ValueSource.Sort ? fmtNum(asset.volume24) : asset.volume24,
       align: ColumnAlign.End,
     },
   ]);

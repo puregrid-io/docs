@@ -11,7 +11,7 @@ import { ColumnFiltering } from '../../examples';
 If you want to add a column filter you need to specify a `filter` function in the column definition:
 
 ```ts:title=Custom+header+rendering
-const [columns, setColumns] = useState<Columns<User>>([
+const { columns, setColumns } = useColumns<User>([
   {
     key: 'name',
     header: 'Name',
@@ -81,16 +81,14 @@ Like [cell renderers](/cells/cell-rendering), filter renderers are not defined i
 Instead you should define an object of renderers, as well as your own state to store the values:
 
 ```ts:title=Defining+filter+renderers
-const [filterState, setFilterState] = useState<FilterState>({});
+const { setFilterState, getFilterState } = useFilterState();
 
 const filterRenderers: FilterRenderers<Product> = {
   string: ({ column }) => (
     <input
-      value={(filterState[column.key] as string) || ''}
+      value={getFilterState(column.key)}
       placeholder="Filter"
-      onChange={e =>
-        setFilterState(s => ({ ...s, [column.key]: e.target.value }))
-      }
+      onChange={e => setFilterState(column.key, e.currentTarget.value)}
     />
   ),
 };

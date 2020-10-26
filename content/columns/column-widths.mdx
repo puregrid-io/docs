@@ -6,7 +6,7 @@ description: Learn about setting the width and minimum width of columns
 Column widths can be controlled via the `width` and `minWidth` options. If no width is specified it will default to `120px`.
 
 ```ts:title=Using+width
-const [columns, setColumns] = useState<Columns<Pupil>>([
+const { columns, setColumns } = useColumns<Pupil>([
   {
     // A number means pixels.
     width: 200,
@@ -24,7 +24,7 @@ const [columns, setColumns] = useState<Columns<Pupil>>([
 When using fractional widths it's a good idea to set a `minWidth` to ensure that if there isn't any available space, at least the column is still legible.
 
 ```ts:title=Using+minWidth
-const [columns, setColumns] = useState<Columns<Pupil>>([
+const { columns, setColumns } = useColumns<Pupil>([
   {
     width: '1fr',
     // Fill available space but if there is none it will be at least 200px.

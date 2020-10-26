@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   Grid,
-  Columns,
+  useColumns,
   ColumnAlign,
   useClientRows,
   HeaderRenderers,
@@ -42,7 +42,7 @@ export function RowSelection() {
   const [allSelected, setAllSelected] = useState(false);
   const { getRowState, setRowState } = useRowState();
 
-  const [columns, setColumns] = useState<Columns<Person>>([
+  const { columns, setColumns } = useColumns<Person>([
     {
       key: 'select',
       header: 'Select All',

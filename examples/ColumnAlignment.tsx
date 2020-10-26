@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Grid, Columns, CellRenderers, ColumnAlign, useClientRows } from '@puregrid/core';
+import React from 'react';
+import { Grid, useColumns, ColumnAlign, useClientRows } from '@puregrid/core';
 
 interface Person {
   name: string;
@@ -31,7 +31,7 @@ const data: Person[] = [
 ];
 
 export function ColumnAlignment() {
-  const [columns, setColumns] = useState<Columns<Person>>([
+  const { columns, setColumns } = useColumns<Person>([
     {
       key: 'name',
       header: 'Name',

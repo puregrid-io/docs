@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Grid, Columns, ColumnAlign, useClientRows } from '@puregrid/core';
+import React from 'react';
+import { Grid, useColumns, ColumnAlign, useClientRows } from '@puregrid/core';
 
 interface Person {
   uid: string;
@@ -27,21 +27,21 @@ const data: Person[] = [
 
 export function YourFirstGrid() {
   // A column setter is optional if you don't want resizing, sorting, or reordering.
-  const [columns, setColumns] = useState<Columns<Person>>([
+  const { columns, setColumns } = useColumns<Person>([
     {
       // Column keys must be unique.
       key: 'name',
       // `header` can be any ReactNode.
       header: 'Name',
       // This is the value to render in a cell for this column.
-      getValue: (person) => person.name,
+      getValue: person => person.name,
       // Optional, defaults to 120px.
       width: 180,
     },
     {
       key: 'age',
       header: 'Age',
-      getValue: (person) => person.age,
+      getValue: person => person.age,
       align: ColumnAlign.End,
       width: 80,
     },
@@ -56,7 +56,5 @@ export function YourFirstGrid() {
     getItemId: person => person.uid,
   });
 
-  return (
-    <Grid<Person> columns={columns} onColumnsChange={setColumns} rows={rows} />
-  );
+  return <Grid<Person> columns={columns} onColumnsChange={setColumns} rows={rows} />;
 }

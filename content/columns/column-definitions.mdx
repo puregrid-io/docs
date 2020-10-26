@@ -16,7 +16,7 @@ interface YourRowItemShape {
   unitsInStock: number;
 }
 
-const [columns, setColumns] = useState<Columns<YourRowItemShape>>([
+const { columns, setColumns } = useColumns<YourRowItemShape>([
   // ...
 ]);
 
@@ -32,7 +32,7 @@ const [columns, setColumns] = useState<Columns<YourRowItemShape>>([
 Columns are defined in an array of objects (or definitions), these are the required properties:
 
 ```ts:title=Required+column+properties
-const [columns, setColumns] = useState<Columns<Stock>>([
+const { columns, setColumns } = useColumns<Stock>([
   {
     // Anything you like. No columns should share the same key.
     key: 'symbol',
