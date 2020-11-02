@@ -29,10 +29,8 @@ Puregrid is declarative and controlled by props, there is no imperative API to l
   ssrHeight={800}
   cellRenderers={cellRenderers}
   wrapCells
-  DetailsRow={({ row }) => {
-    return <div>{row.data}</div>;
-  }}
-  GroupCell={GroupCell}
+  detailsRow={({ row }) => <div>{row.data}</div>}
+  groupCell={groupCell}
   filterRenderers={filterRenderers}
   footer={
     <Pagination
@@ -72,11 +70,11 @@ The only renderer which lives in column definitions is the `header` because it's
 
 A key-value object of cell renderers, the key is referenced in column definitions and the value is a function which takes a column and row and returns a `ReactNode`. See [Cell Rendering](/cells/cell-rendering).
 
-### GroupCell
+### groupCell
 
 A renderer function which takes a column and row and returns a `ReactNode` for grouping rows. See [Row Grouping](/rows/row-grouping).
 
-### DetailsRow
+### detailsRow
 
 A renderer function which is given a details row object and returns a `ReactNode`. See [Master-details rows](/rows/master-details-rows).
 

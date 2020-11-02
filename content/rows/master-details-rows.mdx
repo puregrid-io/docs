@@ -1,5 +1,5 @@
 ---
-title: Master-details rows
+title: Master-details Rows
 description: Learn how to make a details row for a parent row
 ---
 
@@ -25,11 +25,11 @@ const rows = useClientRows<Stock>({
 });
 ```
 
-The final step is to pass in a `DetailsRow` component prop.
+The final step is to pass in a `detailsRow` component prop.
 
 ```tsx:title=Details+Row+interface
 <Grid<Stock>
-  DetailsRow={
+  detailsRow={
     ({ row }) => <Chart data={row.data} /> // `timeSeries` returned in `getRowDetails`
   }
 />

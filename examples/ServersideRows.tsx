@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import debounce from 'lodash/debounce';
 import {
   Grid,
@@ -9,10 +9,16 @@ import {
   ColumnAlign,
   ColumnsChangeDetails,
   ColumnsChangeType,
+  Pagination,
+  Input,
 } from '@puregrid/core';
+
+import { umbraTheme } from '@puregrid/themes';
 
 import { getRows } from '../fakeServer';
 import { Winner, headerRenderers } from '../helpers/olympicWinnerHelpers';
+
+const pageSize = 10;
 
 export function ServersideRows() {
   const [loading, setLoading] = useState(false);
@@ -104,14 +110,26 @@ export function ServersideRows() {
       ],
     },
   ]);
-  const [rows, setRows] = useState<Winner[]>([]);
+  const [serverRows, setServerRows] = useState<{ rows: Winner[]; totalRows: number }>({
+    rows: [],
+    totalRows: 0,
+  });
   const { filterState, setFilterState, getFilterState } = useFilterState();
+  const [pageIndex, setPageIndex] = useState(0);
+  // Pass pageIndex into updateRowData without having to pass it in as an
+  // arg and run into React Hooks "dependency hell".
+  const pageIndexRef = useRef(pageIndex);
+  pageIndexRef.current = pageIndex;
 
   const updateRowData = useCallback(async () => {
     try {
       setLoading(true);
-      const nextRows = await getRows(getColumns(), { filterState: getFilterState() });
-      setRows(nextRows);
+      const res = await getRows(getColumns(), {
+        filterState: getFilterState(),
+        pageSize,
+        pageIndex: pageIndexRef.current,
+      });
+      setServerRows(res);
     } catch (err) {
       console.error(err);
     } finally {
@@ -126,7 +144,7 @@ export function ServersideRows() {
 
   useEffect(() => {
     updateRowData();
-  }, []);
+  }, [pageIndex]);
 
   useEffect(() => {
     debouncedUpdateRowData();
@@ -145,14 +163,14 @@ export function ServersideRows() {
 
   const filterRenderers: FilterRenderers<Winner> = {
     string: ({ column }) => (
-      <input
+      <Input
         value={getFilterState(column.key)}
         placeholder="Filter"
         onChange={e => setFilterState(column.key, e.target.value)}
       />
     ),
     number: ({ column }) => (
-      <input
+      <Input
         type="number"
         min="0"
         value={getFilterState(column.key)}
@@ -163,15 +181,21 @@ export function ServersideRows() {
 
   return (
     <Grid<Winner>
-      style={{ height: 500 }}
       columns={columns}
       filterRenderers={filterRenderers}
       headerRenderers={headerRenderers}
       onColumnsChange={handleColumnsChange}
-      rows={rows}
-      virtualRows
-      getRowSize={() => 40}
+      rows={serverRows.rows}
       loading={loading}
+      theme={umbraTheme}
+      footer={
+        <Pagination
+          itemCount={serverRows.totalRows}
+          pageIndex={pageIndex}
+          pageSize={pageSize}
+          onPageChange={setPageIndex}
+        />
+      }
     />
   );
 }

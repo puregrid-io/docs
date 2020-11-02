@@ -37,9 +37,9 @@ export default function HeaderButton() {
   return (
     <Container>
       <StyledLink
-        href="https://studio.apollographql.com?utm_source=docs-button"
+        href="https://github.com/puregrid-io/puregrid/tree/master/examples"
         target="_blank"
-        rel="noopener noreferrer"
+        rel="noopener"
       >
         Browse example code
         <StyledIcon weight="thin" />

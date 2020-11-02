@@ -1,5 +1,5 @@
 ---
-title: Virtual rows
+title: Virtual Rows
 description: Learn how to enable virtual rows, and the pros and cons
 ---
 
@@ -15,14 +15,6 @@ The tradeoff is that you have to fix the row heights upfront. You also might hav
 To enable virtual rows set `virtualRows` to true in the Grid props.
 
 ```tsx:title=Enable+virtual+rows
-<Grid<YourDataShape> virtualRows />
-```
-
-## Clientside rows
-
-When you're generating rows from data on the client you also need to ensure that rows have a set height:
-
-```tsx:title=Enable+virtual+rows
 <Grid<YourDataShape>
   virtualRows
   // You can return different heights based on the row.type or row.data
@@ -31,6 +23,10 @@ When you're generating rows from data on the client you also need to ensure that
 />
 ```
 
+When setting `virtualRows` you must also ensure that `getRowSize` returns a row height.
+
+## Example
+
 <Showcase fileName="VirtualRows.tsx">
   <VirtualRows />
 </Showcase>
@@ -38,7 +34,3 @@ When you're generating rows from data on the client you also need to ensure that
   When virtualRows is enabled ensure that the height of the grid is limited
   either by its container or by setting a height on the grid itself.
 </Alert>
-
-## Serverside rows
-
-The only requisite other than `virtualRows={true}` is that rows should have the `size` field set. See [Serverside Rows](/rows/serverside).

@@ -3,6 +3,9 @@ title: Client vs Server Rows
 description: Learn when and how to user client and server side rows
 ---
 
+import { Showcase } from '../../src/components';
+import { ClientColumnSorting, ServersideRows } from '../../examples';
+
 ## Client vs Server
 
 There are two ways of working with data and rows: clientside or serverside.
@@ -118,3 +121,11 @@ Level is optional and used for [Row Grouping](rows/row-grouping) in case you wan
 ##### data
 
 The row data whose shape is up to you unless it's a group row which has a fixed shape.
+
+### Example
+
+While the server is mocked in the following example a real server can be implemented with the same code. Of course your server might not be written in JavaScript but just needs to accept requests for data and return rows in the shapes prescribed above.
+
+<Showcase fileName="ServersideRows.tsx">
+  <ServersideRows />
+</Showcase>

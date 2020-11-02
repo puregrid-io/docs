@@ -4,11 +4,15 @@ description: Use our pre-built pagination or something custom
 ---
 
 import { Showcase } from '../../src/components';
-import { PaginationBuiltin, PaginationCustom } from '../../examples';
+import {
+  PaginationBuiltin,
+  PaginationCustom,
+  ServersideRows,
+} from '../../examples';
 
 ## Setup state and data
 
-Pagination state is controlled by you and the pagination controls can either use our provided ones or something completely custom.
+Pagination state is controlled by you and the pagination controls can either use our provided component or something custom.
 
 Whether you're doing pagination on the client or server the first thing to create is some state to keep track of the page index:
 
@@ -17,7 +21,11 @@ Whether you're doing pagination on the client or server the first thing to creat
 const [pageIndex, setPageIndex] = useState(0);
 ```
 
-The next step depends on if you're handling data on the client or server. Puregrid gives you `useClientRows` to handle client-side pagination. To learn how to paginate on the server checkout [Serverside Rows](/rows/serverside-rows).
+The next step depends on if you're handling data on the client or server.
+
+## Clientside
+
+Puregrid gives you `useClientRows` to handle client-side pagination.
 
 ```ts:title=Client+side+pagination
 const rows = useClientRows<DigitalAsset>({
@@ -29,7 +37,15 @@ const rows = useClientRows<DigitalAsset>({
 });
 ```
 
-## Using our pagination controls
+## Serverside
+
+Instead of using `useClientRows`, serverside pagination is entirely up to you to define. You can find the following example and more information in the [Client vs Server Rows](/rows/client-vs-server-rows/) docs.
+
+<Showcase fileName="ServersideRows.tsx">
+  <ServersideRows />
+</Showcase>
+
+## Built-in controls
 
 If you prefer to use our pagination controls the final step is to import `Pagination` and pass it into the footer.
 
@@ -50,7 +66,7 @@ If you prefer to use our pagination controls the final step is to import `Pagina
   <PaginationBuiltin />
 </Showcase>
 
-## Custom paging controls
+## Custom controls
 
 Alternatively you can use your own paging controls. Here's a rudimentary example to get you started.
 

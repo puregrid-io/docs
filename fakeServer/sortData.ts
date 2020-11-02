@@ -1,7 +1,7 @@
 import {
   Columns,
   Column,
-  filterColumns,
+  flatFilterColumns,
   ValueSource,
   SortDirection,
 } from '@puregrid/core';
@@ -38,6 +38,6 @@ function sort(sortCols: Column<Winner>, data: Winner[]) {
 }
 
 export function sortData(columns: Columns<Winner>, data: Winner[]) {
-  const sortCols = filterColumns(columns, column => column.sortDirection);
+  const sortCols = flatFilterColumns(columns, column => column.sortDirection);
   return sort(sortCols, data);
 }

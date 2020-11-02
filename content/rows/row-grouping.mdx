@@ -1,16 +1,16 @@
 ---
-title: Row grouping
-description: How to group rows by their data on the client
+title: Row Grouping
+description: How to group rows by data on the client or server
 ---
 
 import { Showcase } from '../../src/components';
-import { RowGrouping } from '../../examples';
+import { ClientRowGrouping, LazyLoadingRowGroups } from '../../examples';
 
 ## Overview
 
-Row grouping finds the same values under a column and groups the rows together. For example if you have a Year column you could group all the rows under the same year together.
+Row grouping finds the same values for a column and groups the rows together. For example if you have a Year column you could group all the rows under the same year together.
 
-You can either handle row grouping yourself on the server when dealing with large datasets (see [Serverside Rows](/rows/serverside-rows)), or set `group: true` in a [Column Definition](/columns/column-definition).
+You should set `group` to `true` on columns you want to group by:
 
 ```ts:title=Set+group+to+true
 {
@@ -21,7 +21,42 @@ You can either handle row grouping yourself on the server when dealing with larg
 }
 ```
 
-For clientside row grouping you can also set the depth of grouping you want to expand by default:
+The next step is to define a group row renderer.
+
+```tsx:title=Set+group+to+true
+const groupCell: GroupCellRenderer<Animal> = ({ column, row }) => {
+  // Don't render anything on the group row except in the grouping cell.
+  if (column.key !== row.data.colKey) {
+    return null;
+  }
+
+  return (
+    <>
+      <Button
+        className="expand-btn"
+        onClick={() =>
+          setRowState(row.key, { expanded: !row.data.expanded })
+        }
+      >
+        {row.data.expanded ? (
+          <AiOutlineDown size={12} />
+        ) : (
+          <AiOutlineRight size={12} />
+        )}
+      </Button>
+      {row.data.value} ({row.data.childCount})
+    </>
+  );
+};
+
+<Grid<YourDataShape> groupCell={groupCell} />;
+```
+
+Note that rather than use the `expanded` row state we use `row.data.expanded` because the `defaultExpandTo` option can influence the value.`
+
+## Clientside
+
+Clientside grouping is done for you by the `useClientRows` hook. You can also set the depth of grouping you want to expand by default with `defaultExpandTo`:
 
 ```ts:title=Setting+default+expansion+depth
 const rows = useClientRows<Athlete>({
@@ -36,36 +71,10 @@ const rows = useClientRows<Athlete>({
 
 If you set `defaultExpandTo` to `-1` it will expand all groups by default.
 
-The next step is to define a group row renderer.
+### Example
 
-```ts:title=Set+group+to+true
-const GroupCell: GroupCellComponent<Product> = (column, row) => {
-  // Don't render anything on the group row except in the grouping cell.
-  if (column.key !== row.data.colKey) {
-    return null;
-  }
-
-  return (
-    <>
-      <button
-        onClick={() =>
-          setRowState(row.key, { expanded: !row.data.expanded })
-        }
-      >
-        {row.data.expanded ? '↓' : '→'}
-      </button>
-      {row.data.value} ({row.data.childCount})
-    </>
-  );
-};
-```
-
-Note that rather than use the `expanded` row state we use `row.data.expanded` because the `defaultExpandTo` option can influence the value.
-
-## Example
-
-<Showcase fileName="RowGrouping.tsx">
-  <RowGrouping />
+<Showcase fileName="ClientRowGrouping.tsx">
+  <ClientRowGrouping />
 </Showcase>
 
 Another nice touch you might notice in the example is to not render values in cells which are grouped on normal rows (expand until you see normal rows).
@@ -81,3 +90,35 @@ const cellRenderers: CellRenderers<Winner> = {
   }}
 />;
 ```
+
+## Serverside
+
+Serverside grouping can be done in whatever way makes sense to you as long as the correctly shaped rows are passed into the grid. You can find more information about row types on [Client vs Server Rows](/rows/client-vs-server-rows).
+
+For a quick summary you return normal rows (`NormalRow`) as before, though set the `level` number appropriately if you need to visualize grouping depth.
+
+And at the top of each group of rows return a group row (`GroupRow`) with the shape:
+
+```ts:title=Group+row+shape
+interface GroupRow {
+  type: RowType.GroupRow;
+  key: string;
+  level: number;
+  data: {
+    colKey: string;
+    value: string;
+    expanded: boolean;
+    childCount: number;
+  };
+}
+```
+
+You can also **lazily load** groups since it's up to you to render a group expand button and perform an action on clicking it.
+
+### Example
+
+Below is an example simulating a call to the server to get the group contents.
+
+<Showcase fileName="LazyLoadingRowGroups.tsx">
+  <LazyLoadingRowGroups />
+</Showcase>

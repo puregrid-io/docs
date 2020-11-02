@@ -6,24 +6,28 @@ description: An in-depth look at column filtering
 import { Showcase } from '../../src/components';
 import { ColumnFiltering } from '../../examples';
 
-## The filter function
+## Overview
 
-If you want to add a column filter you need to specify a `filter` function in the column definition:
+If you want to add a column filter you need to specify a `filter` string in the column definition. This string maps to a key in `filterMethods`, or the equivalent on your server. You also need to supply a `filterRenderer` string which is the name of the renderer that returns a component to do the actual filtering (e.g. a text box).
 
-```ts:title=Custom+header+rendering
+```ts:title=Specifying+a+column+filter
 const { columns, setColumns } = useColumns<User>([
   {
     key: 'name',
     header: 'Name',
     getValue: user => user.name,
-    filter: someFilterFunction,
+    filter: 'someFilterFunction',
+    // filter: 'partialStringMatch' // One of the built in filters.
+    filterRenderer: 'string',
   },
 ]);
 ```
 
-### Provided filters
+For the client a few built in filters are also provided as discussed below.
 
-Puregrid provides some defaults filter functions you can import:
+## Provided filters (clientside only)
+
+Puregrid provides some defaults filters you can use:
 
 `exactMatch`
 
@@ -38,6 +42,24 @@ Uses a case-insensitive equality comparison (suitable for latin based languages)
 Uses a case-insensitive test (suitable for latin based languages) to test that the filter value _partially_ matches the column cell value.
 
 You may have other needs such as testing a Turkish string or checking if the cell value fits into a range. Writing a custom filter function is simple:
+
+## Custom filter methods
+
+If you pass a custom string in the `filter` property of a column definition then you need to define it in `filterMethods` and pass it into `useClientRows` along with `filterState`:
+
+```ts:title=Custom+range+filter
+const { setFilterState, getFilterState } = useFilterState();
+
+const rows = useClientRows<YourDataShape>({
+  columns,
+  data,
+  getItemId: item => item.uid,
+  filterState: getFilterState(),
+  filterMethods: { myCustomFilter },
+});
+```
+
+Let's take a look at some examples of custom filter methods:
 
 ### Custom range filter
 
@@ -76,9 +98,7 @@ function turkishPartialMatch<T>(
 
 Puregrid doesn't come with built in filters because UI controls are highly subjective and there are a myriad of them available, or you might have your own.
 
-Like [cell renderers](/cells/cell-rendering), filter renderers are not defined in Columns for performance reasons due to the amount of times they need to update from user input.
-
-Instead you should define an object of renderers, as well as your own state to store the values:
+To define custom filter renderer(s) create an object where the key matches up to what you specified in the `filterRenderer` in the column definitions:
 
 ```ts:title=Defining+filter+renderers
 const { setFilterState, getFilterState } = useFilterState();
@@ -101,15 +121,6 @@ And then pass them into the `Grid`:
   // ...
   filterRenderers={filterRenderers}
 />
-```
-
-Finally, you need to pass `filterState` into `useClientRows`:
-
-```ts:title=Pass+filter+state+into+useClientRows
-const rows = useClientRows<Product>({
-  // ...
-  filterState,
-});
 ```
 
 ## Global filtering
