@@ -3,4 +3,53 @@ title: Cell Rendering
 description: How to customize the rendering of cells
 ---
 
-Hey cunts
+import { Showcase } from '../../src/components';
+import { CellRendering } from '../../examples';
+
+## Overview
+
+By default the value returned by `getValue` in the column definition will be rendered in the cell. To customize this you need to specify a special renderer, either for all columns:
+
+```tsx:title=Setting+a+default+cell+renderer
+<Grid
+  defaultColumn={{
+    cellRenderer: 'myCustomRenderer',
+  }}
+/>
+```
+
+Or for specific columns:
+
+```ts:title=Setting+a+cell+renderer+per+column
+const { columns, setColumns } = useColumns<YourDataShape>([
+  {
+    key: 'someColumn',
+    header: 'Some Column',
+    getValue: item => item.something,
+    cellRenderer: 'myCustomRenderer',
+  },
+]);
+```
+
+Finally you need to define a renderer for 'myCustomRenderer' and pass it into the Grid.
+
+```tsx:title=Defining+the+cell+renderer
+const cellRenderers: CellRenderers<YourDataShape> = {
+  myCustomRenderer: ({ column, row }) => (
+    <strong>{column.getValue(row.data)}</strong>
+  ),
+};
+
+<Grid<YourDataShape>
+  columns={columns}
+  onColumnsChange={setColumns}
+  rows={rows}
+  cellRenderers={cellRenderers}
+/>;
+```
+
+## Example
+
+<Showcase fileName="CellRendering.tsx">
+  <CellRendering />
+</Showcase>
