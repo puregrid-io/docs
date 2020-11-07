@@ -12,7 +12,7 @@ Virtual rows allow you to only render the rows which are currently visible. It's
 
 The tradeoff is that you have to fix the row heights upfront. You also might have to make provisions for serverside rendering or headless automated tests to ensure that rows are rendered in those scenarios as the grid needs to calculate its rendered height.
 
-To enable virtual rows set `virtualRows` to true in the Grid props.
+To enable virtual rows set `virtualRows` to true in the `<Grid />` props.
 
 ```tsx:title=Enable+virtual+rows
 <Grid<YourDataShape>

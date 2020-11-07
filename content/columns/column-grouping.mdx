@@ -6,6 +6,8 @@ description: Learn how to group columns
 import { Alert, AlertType, Showcase } from '../../src/components';
 import { ColumnGrouping } from '../../examples';
 
+## Overview
+
 Columns can be logically grouped. There is a special `ColumnGroup` type for this, it has a subset of column options and also a `children` array. A definition in the `columns` array can be either type.
 
 ```ts
@@ -35,6 +37,8 @@ const { columns, setColumns } = useColumns<Product>([
 ```
 
 A `ColumnGroup` can be nested within another `ColumnGroup`, as seen in the example below:
+
+## Example
 
 <Showcase fileName="ColumnGrouping.tsx">
   <ColumnGrouping />

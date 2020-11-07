@@ -1,3 +1,4 @@
+export * from './CellEditing';
 export * from './CellRendering';
 export * from './ClientColumnSorting';
 export * from './ClientRowGrouping';

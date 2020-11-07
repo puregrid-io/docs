@@ -3,4 +3,111 @@ title: Cell Editing
 description: Learn about different methods of editing cells
 ---
 
-Hey cunts
+import { Alert, AlertType, Showcase } from '../../src/components';
+import { CellEditing } from '../../examples';
+
+When it comes to cell editing you can apply what you learned in [Cell Rendering](cells/cell-rendering) to render any kind of edit control you like.
+
+## Clientside data
+
+It's up to you how you update data. In our examples we define a `setValue` function on the column definitions and an `updateValue` function which updates the row data using it.
+
+The `setValue` function works similarly to a Redux reducer in that it should immutably return a new piece of row data (in this case a new Person).
+
+```ts:title=Defining+a+setValue+function
+getValue: person => person.dateOfBirth,
+setValue: (person: Person, newValue: string) => ({
+  ...person,
+  dateOfBirth: newValue,
+}),
+```
+
+Next let's define a function to update the row data:
+
+```ts:title=Defining+an+updateValue+function
+function updateValue(
+  column: DerivedColumn<Person>,
+  row: NormalRow<Person>,
+  newValue: unknown
+) {
+  if (column.setValue) {
+    setData(people =>
+      people.map(person => {
+        if (person.uid === row.key) {
+          return column.setValue(person, newValue);
+        }
+        return person;
+      })
+    );
+  } else {
+    throw new Error(`No setValue function defined for ${column.key}`);
+  }
+}
+```
+
+## Serverside data
+
+How you update the data on the server is up to you.
+
+## Edit controls based on mouse or touch input
+
+```ts:title=Defining+the+cell+renderer
+const cellRenderers: CellRenderers<YourDataShape> = {
+  checkbox: ({ column, row }) => (
+    <input
+      type="checkbox"
+      value={column.getValue(row.data)}
+      onChange={e => updateData(column, row, e.target.value)}
+    />
+  ),
+};
+```
+
+## Edit controls based on keyboard input
+
+For keyboard input we recommend you use the `CellEditor` component. It's both more performant (no grid data processing each key press) and a better user experience (no jumping around of items if the sorting/filtering/grouping changes, and the ability to cancel the edit).
+
+In this case you can import `CellEditor` and render a readonly and editable component separately.
+
+```ts:title=Custom+components+with+CellEditor
+const cellRenderers: CellRenderers<YourDataShape> = {
+  textInput: ({ column, row }) => (
+    <CellEditor>
+      <Read>{column.getValue(row.data)}</Read>
+      <Write value={column.getValue(row.data)} onCommit={updateData}>
+        {({ intermediateValue, setIntermediateValue }) => (
+          <input
+            type="text"
+            value={intermediateValue}
+            onChange={e => setIntermediateValue(e.currentTarget.value)}
+          />
+        )}
+      </Write>
+    </CellEditor>
+  ),
+};
+```
+
+### Read Component
+
+You should put the non-editable component in here (for example a formatted price label).
+
+### Write Component
+
+You should put your editable component here (for example a checkbox or a text input).
+
+The `<Write />` component has the following props:
+
+| Property | Description                                                                                                                                                       |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| onCommit | When the user presses the `Return` key or the control looses focus then this will be called which is your opportunity to update the data on the client or server. |
+| onUpdate | This is called every time you call `updateValue`, typically you don't need this.                                                                                  |
+| onCancel | Called when the user presses `Escape`.                                                                                                                            |
+
+`<Write />` child is a function that returns the cell contents (see [Render Props](https://reactjs.org/docs/render-props.html)). You are passed `intermediateValue` and `setIntermediateValue` to display and update the value of the cell, as well as `setMode` should you need to change the cell to read mode by calling `setMode(CellEditorMode.Read)`.
+
+## Example
+
+<Showcase fileName="CellEditing.tsx">
+  <CellEditing />
+</Showcase>
