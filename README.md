@@ -1,9 +1,7 @@
 # Puregrid
 
-This is the public repo for Puregrid. It doesn't contain the source but it's where you can raise issues and see code examples.
+[Homepage](https://puregrid.io) | [Documentation](https://docs.puregrid.io)
+
+This is the doc repo for Puregrid. You can find code examples here but **please raise issues at [@puregrid/core](https://github.com/puregrid-io/core)**.
 
 This repo is a **work in progress** and not intended for use yet.
-
-## Documentation
-
-Head over to [docs.puregird.io](https://docs.puregrid.io) for the documentation and live examples.

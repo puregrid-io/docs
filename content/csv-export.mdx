@@ -1,0 +1,36 @@
+---
+title: CSV Export
+description: Learn how to export grid data to CSV
+---
+
+import { Showcase } from '../src/components';
+import { DirectionRtl } from '../examples';
+
+While there's nothing stopping from using your own or third party code, Puregrid provides a `saveToCsv(props)` method for convenience.
+
+It accepts the following props:
+
+```ts:title=savetoCsv(props)
+interface SaveToCsvProps<T> {
+  columns: Columns<T>;
+  data: T[];
+  filename?: string;
+  excludeHeaders?: boolean;
+}
+```
+
+If you don't specify a `filename` it will default to `"gridData.csv"`.
+
+```ts:title=Example+saveToCsv+call
+import { saveToCsv } from '@puregrid/core';
+
+// An `onClick` handler for some button you have created.
+function onExportClick() {
+  saveToCsv({
+    data,
+    columns,
+  });
+}
+```
+
+## Example

@@ -11,9 +11,8 @@ import {
   ColumnsChangeType,
   Pagination,
   Input,
+  InputSize,
 } from '@puregrid/core';
-
-import { umbraTheme } from '@puregrid/themes';
 
 import { getRows } from '../fakeServer';
 import { Winner, headerRenderers } from '../helpers/olympicWinnerHelpers';
@@ -167,6 +166,7 @@ export function ServersideRows() {
         value={getFilterState(column.key)}
         placeholder="Filter"
         onChange={e => setFilterState(column.key, e.target.value)}
+        inputSize={InputSize.Small}
       />
     ),
     number: ({ column }) => (
@@ -175,6 +175,7 @@ export function ServersideRows() {
         min="0"
         value={getFilterState(column.key)}
         onChange={e => setFilterState(column.key, Number(e.target.value))}
+        inputSize={InputSize.Small}
       />
     ),
   };
@@ -187,7 +188,6 @@ export function ServersideRows() {
       onColumnsChange={handleColumnsChange}
       rows={serverRows.rows}
       loading={loading}
-      theme={umbraTheme}
       footer={
         <Pagination
           itemCount={serverRows.totalRows}

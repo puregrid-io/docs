@@ -3,4 +3,61 @@ title: Cell Selection
 description: Learn about cell selection and the keyboard shortcuts
 ---
 
-Hey cunts
+import { Showcase } from '../../src/components';
+import { PaginationBuiltin } from '../../examples';
+
+## Overview
+
+Unlike most other features, cell selection is controlled internally and on by default. You can use it in all the examples.
+
+You can expand or contract a selection using `Shift` + arrow keys. The behavior depends on what corner you started with and what direction the selection is going in.
+
+You can copy the selection with `Ctrl/Cmd + C`. This will call `column.getValue` function to get the cell value. If you want to return a different value for the clipboard you can do the following:
+
+```ts:title=Return+different+value+for+clipboard
+const { columns, setColumns } = useColumns<YourDataShape>([
+  {
+    key: 'amount',
+    header: 'Amount (USD)',
+    getValue: (asset, source) => source === ValueSource.Cell : fmtCcy(asset.amount) : asset.amount,
+  }
+]);
+```
+
+`ValueSource` can be one of the following:
+
+| Property  | Description                             |
+| --------- | --------------------------------------- |
+| Cell      | The value when rendered in a grid cell. |
+| Filter    | The value to perform filtering on.      |
+| Sort      | The value to perform sorting on.        |
+| Clipboard | The value to copy to clipboard.         |
+| Export    | The value to use when exporting to CSV. |
+
+## Styling
+
+The following theme variables control the style of the pagination:
+
+```ts:title=Cell+selection+theme+variables
+/**
+  * The background of the cells in a selection.
+  */
+selectionBg: 'rgb(236 244 255)',
+/**
+  * The text color of selected cells.
+  */
+selectionTextColor: '',
+/**
+  * The background that flashes for a moment to indicate the cells have been copied
+  * to clipboard.
+  */
+selectionCopiedBg: 'rgb(218 233 255)',
+```
+
+## Example
+
+You can browse any example to get a feel for cell selection. Below is one of the examples from the [Pagination](/rows/pagination) page.
+
+<Showcase fileName="PaginationBuiltin.tsx">
+  <PaginationBuiltin />
+</Showcase>

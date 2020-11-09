@@ -56,5 +56,7 @@ export function YourFirstGrid() {
     getItemId: person => person.uid,
   });
 
-  return <Grid<Person> columns={columns} onColumnsChange={setColumns} rows={rows} />;
+  return (
+    <Grid<Person> columns={columns} onColumnsChange={setColumns} rows={rows} loading />
+  );
 }

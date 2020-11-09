@@ -63,7 +63,7 @@ export function ColumnPinning() {
     {
       key: 'anotherVeryWideThing',
       header: 'Another Very Wide Thing',
-      width: 800,
+      width: 1200,
       getValue: d => d.veryWideThing,
       align: ColumnAlign.End,
     },

@@ -8,7 +8,7 @@ module.exports = {
         description: 'A lightweight, full-featured data grid for React',
         githubRepo: 'puregrid-io/puregrid',
         sidebarCategories: {
-          null: ['index', 'your-first-grid', 'grid-props', 'styling', 'rtl'],
+          null: ['index', 'your-first-grid', 'grid-props', 'styling', 'rtl', 'csv-export'],
           Columns: [
             'columns/column-definitions',
             'columns/column-widths',
