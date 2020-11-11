@@ -116,7 +116,8 @@ export function ClientRowGrouping() {
     return (
       <>
         <Button
-          className="expand-btn"
+          className="crg-expand-btn"
+          title={row.data.expanded ? 'Collapse' : 'Expand'}
           onClick={() => setRowState(row.key, { expanded: !row.data.expanded })}
         >
           {row.data.expanded ? <AiOutlineDown size={12} /> : <AiOutlineRight size={12} />}
@@ -150,7 +151,7 @@ export function ClientRowGrouping() {
 }
 
 const componentStyles = css`
-  .expand-btn {
+  .crg-expand-btn {
     margin-right: 6px;
     padding: 4px;
   }

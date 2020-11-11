@@ -10,6 +10,9 @@ import {
   DetailsRow,
   useRowState,
   CellRenderers,
+  Button,
+  css,
+  useStyle,
 } from '@puregrid/core';
 import stocks from '../static/stocks.json';
 
@@ -34,7 +37,11 @@ interface Stock {
   timeSeries: TimeSeries;
 }
 
-function PriceChart({ row }: { row: DetailsRow<TimeSeries> }) {
+interface PriceChartProps {
+  row: DetailsRow<TimeSeries>;
+}
+
+function PriceChart({ row }: PriceChartProps) {
   const { ref, width, height } = useResizeObserver<HTMLDivElement>();
   const chart = useRef<IChartApi>();
 
@@ -110,6 +117,7 @@ function PriceChart({ row }: { row: DetailsRow<TimeSeries> }) {
 }
 
 export function MasterDetailsRows() {
+  useStyle('client-row-grouping', componentStyles);
   const { getRowState, setRowState } = useRowState({
     MS: {
       expanded: true,
@@ -119,7 +127,7 @@ export function MasterDetailsRows() {
     {
       key: 'expandRow',
       header: null,
-      width: 44,
+      width: 52,
       getValue: stock => getRowState(stock.metaData.symbol).expanded,
       cellRenderer: 'expandRow',
       pinned: true,
@@ -157,13 +165,13 @@ export function MasterDetailsRows() {
     expandRow: ({ row }) => {
       const { expanded } = getRowState(row.key);
       return (
-        <button
+        <Button
+          className="mdr-expand-btn"
           title={expanded ? 'Collapse' : 'Expand'}
-          style={{ padding: 2 }}
           onClick={() => setRowState(row.key, { expanded: !expanded })}
         >
           {expanded ? <AiOutlineDown size={12} /> : <AiOutlineRight size={12} />}
-        </button>
+        </Button>
       );
     },
   };
@@ -177,8 +185,16 @@ export function MasterDetailsRows() {
       // if you do specify it then you're likely to want a different height
       // for details rows.
       getRowSize={row => (row.type === RowType.DetailsRow ? 301 : 40)}
-      DetailsRow={PriceChart}
+      detailsRow={PriceChart}
+      stickyDetailsRow
       cellRenderers={cellRenderers}
     />
   );
 }
+
+const componentStyles = css`
+  .mdr-expand-btn {
+    margin-right: 6px;
+    padding: 4px;
+  }
+`;
