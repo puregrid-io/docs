@@ -1,6 +1,6 @@
 import { Columns, createNormalRows, FilterState, paginateRows } from '@puregrid/core';
 import olympicWinners from '../static/olympicWinnersSmall.json';
-import { Winner } from '../helpers/olympicWinnerHelpers';
+import { Winner } from '../src/utils/olympicWinnerHelpers';
 import { filterData } from './filterData';
 import { sortData } from './sortData';
 

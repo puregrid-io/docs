@@ -1,5 +1,5 @@
 {
-  "name": "puregrid-docs",
+  "name": "@puregrid/docs",
   "private": true,
   "description": "Docs for http://docs.puregrid.io",
   "version": "0.1.0",
@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "@puregrid/themes": "^0.0.1-alpha.0",
-    "gatsby": "^2.25.3",
+    "cuid": "^2.1.8",
+    "gatsby": "^2.25.4",
     "gatsby-theme-apollo-docs": "4.5.9",
     "lightweight-charts": "^3.1.5",
     "lodash": "^4.17.20",
@@ -19,7 +20,7 @@
     "react-dom": "^17.0.1",
     "react-icons": "^3.11.0",
     "react-sparklines": "^1.7.0",
-    "use-resize-observer": "^6.1.0"
+    "use-resize-observer": "^7.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.56",

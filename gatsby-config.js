@@ -5,7 +5,7 @@ module.exports = {
       options: {
         root: __dirname,
         siteName: 'Puregrid',
-        description: 'A lightweight, full-featured data grid for React',
+        description: 'A full-featured, lightweight data grid for React',
         githubRepo: 'puregrid-io/puregrid',
         sidebarCategories: {
           null: ['index', 'your-first-grid', 'grid-props', 'styling', 'rtl', 'csv-export'],

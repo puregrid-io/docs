@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, useColumns, useClientRows, ColumnAlign } from '@puregrid/core';
 
 import olympicWinners from '../static/olympicWinnersSmall.json';
-import { Winner, headerRenderers } from '../helpers/olympicWinnerHelpers';
+import { Winner, headerRenderers } from '../src/utils/olympicWinnerHelpers';
 
 export function VirtualRows() {
   const { columns, setColumns } = useColumns<Winner>([

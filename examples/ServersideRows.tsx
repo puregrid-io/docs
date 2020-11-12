@@ -15,7 +15,7 @@ import {
 } from '@puregrid/core';
 
 import { getRows } from '../fakeServer';
-import { Winner, headerRenderers } from '../helpers/olympicWinnerHelpers';
+import { Winner, headerRenderers } from '../src/utils/olympicWinnerHelpers';
 
 const pageSize = 10;
 

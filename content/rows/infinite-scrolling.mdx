@@ -3,4 +3,66 @@ title: Infinite Scrolling
 description: Learn how to load more rows as the user nears the bottom of the grid
 ---
 
-Hey nolly polly
+import { Alert, AlertType, Showcase } from '../../src/components';
+import { InfiniteScroll } from '../../examples';
+
+## Clientside
+
+There is no need for infinite scrolling since you have the data upfront just pass it into `useClientRows` without any pagination options and use [Virtual Rows](/rows/virtual-rows).
+
+## Serverside
+
+Infinite scrolling is an alternative to "traditional" pagination whereby a new page of data is automatically loaded as the user scrolls to the bottom of the grid.
+
+<Alert>
+  To use infinite scroll you should also enable virtual rows and ensure
+  that your grid has a fixed height (does not grow indefinitely). You
+  should also ensure you populate the grid with enough items to cause a
+  scrollbar.
+</Alert>
+
+You should listen for events via the `onScroll` Grid prop. How you fetch new data is up to you, here's the handler from the example below:
+
+```tsx:title=Example+of+loading+more+data+on+scroll
+function fetchMorePeople(): Promise<Person[]> {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(generatePeople(10));
+    }, 2000);
+  });
+}
+
+export function InfiniteScroll() {
+  const [data, setData] = useState<Person[]>(generatePeople(20));
+  const [fetching, setFetching] = useState(false);
+
+  async function handleScroll(e: React.UIEvent<HTMLDivElement>) {
+    if (
+      e.currentTarget.scrollTop + 1 >=
+      e.currentTarget.scrollHeight - e.currentTarget.clientHeight
+    ) {
+      if (!fetching) {
+        setFetching(true);
+        try {
+          await fetchMorePeople().then(people => setData(d => d.concat(people)));
+        } finally {
+          setFetching(false);
+        }
+      }
+    }
+  }
+
+  return (
+    <Grid<Person>
+      {/* ... */}
+      loadingMore={fetching}
+    />
+  )
+}
+```
+
+### Example
+
+<Showcase fileName="InfiniteScroll.tsx">
+  <InfiniteScroll />
+</Showcase>

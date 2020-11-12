@@ -5,7 +5,7 @@ import {
   ValueSource,
   SortDirection,
 } from '@puregrid/core';
-import { Winner } from '../helpers/olympicWinnerHelpers';
+import { Winner } from '../src/utils/olympicWinnerHelpers';
 
 const collator = new Intl.Collator();
 

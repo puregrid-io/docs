@@ -5,7 +5,7 @@ import {
   builtinFilters,
   FilterState,
 } from '@puregrid/core';
-import { Winner } from '../helpers/olympicWinnerHelpers';
+import { Winner } from '../src/utils/olympicWinnerHelpers';
 
 // What about getValue usage on an actual server!? The server could use the col key
 function filter(filterCols: Column<Winner>[], data: Winner[], filterState: FilterState) {

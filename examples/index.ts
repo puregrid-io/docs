@@ -8,6 +8,7 @@ export * from './ColumnGrouping';
 export * from './ColumnPinning';
 export * from './DirectionRtl';
 export * from './HeaderRendering';
+export * from './InfiniteScroll';
 export * from './LazyLoadingRowGroups';
 export * from './MasterDetailsRows';
 export * from './NoBordersTheme';

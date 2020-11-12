@@ -18,7 +18,7 @@ import {
 } from '@puregrid/core';
 
 import olympicWinners from '../static/olympicWinnersSmall.json';
-import { Winner } from '../helpers/olympicWinnerHelpers';
+import { Winner, headerRenderers } from '../src/utils/olympicWinnerHelpers';
 
 export function ClientRowGrouping() {
   useStyle('client-row-grouping', componentStyles);
@@ -100,12 +100,6 @@ export function ClientRowGrouping() {
     getItemId: winner => winner.id,
     rowState: getRowState(),
   });
-
-  const headerRenderers: HeaderRenderers<Winner> = {
-    Gold: () => <FaMedal />,
-    Silver: () => <BiMedal />,
-    Bronze: () => <RiMedal2Line />,
-  };
 
   const groupCell: GroupCellRenderer<Winner> = ({ column, row }) => {
     // Don't render anything on the group row except in the grouping cell.

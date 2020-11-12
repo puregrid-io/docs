@@ -9,3 +9,8 @@ svg {
 input {
   max-width: 100%;
 }
+
+/* Lazy fix for doc header going under grid header */
+main > header {
+  z-index: 10 !important;
+}
