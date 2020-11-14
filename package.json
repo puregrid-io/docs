@@ -12,9 +12,9 @@
   "dependencies": {
     "@puregrid/themes": "^0.0.1-alpha.0",
     "cuid": "^2.1.8",
-    "gatsby": "^2.25.4",
+    "gatsby": "^2.26.1",
     "gatsby-theme-apollo-docs": "4.5.9",
-    "lightweight-charts": "^3.1.5",
+    "lightweight-charts": "^3.2.0",
     "lodash": "^4.17.20",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

@@ -30,7 +30,6 @@ interface DigitalAsset {
 const pageSize = 10;
 const fmtCcy = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' })
   .format;
-const fmtNum = new Intl.NumberFormat('en-US').format;
 
 export function PaginationCustom() {
   const { columns, setColumns } = useColumns<DigitalAsset>([
@@ -58,7 +57,7 @@ export function PaginationCustom() {
       header: 'Price (USD)',
       width: 160,
       getValue: (asset, source) =>
-        source !== ValueSource.Sort ? fmtCcy(asset.price_usd) : asset.price_usd,
+        source === ValueSource.Cell ? fmtCcy(asset.price_usd) : asset.price_usd,
       align: ColumnAlign.End,
     },
     {
@@ -67,7 +66,7 @@ export function PaginationCustom() {
       width: '1fr',
       minWidth: 160,
       getValue: (asset, source) =>
-        source !== ValueSource.Sort ? fmtCcy(asset.market_cap_usd) : asset.market_cap_usd,
+        source === ValueSource.Cell ? fmtCcy(asset.market_cap_usd) : asset.market_cap_usd,
       align: ColumnAlign.End,
     },
     {
@@ -75,7 +74,7 @@ export function PaginationCustom() {
       header: 'Volume (24h)',
       width: 160,
       getValue: (asset, source) =>
-        source !== ValueSource.Sort ? fmtNum(asset.volume24) : asset.volume24,
+        source === ValueSource.Cell ? fmtCcy(asset.volume24) : asset.volume24,
       align: ColumnAlign.End,
     },
   ]);

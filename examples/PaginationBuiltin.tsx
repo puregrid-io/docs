@@ -7,6 +7,8 @@ import {
   useClientRows,
   Direction,
   ValueSource,
+  Button,
+  saveToCsv,
 } from '@puregrid/core';
 import top100cryptos from '../static/top100cryptos.json';
 
@@ -32,7 +34,6 @@ interface DigitalAsset {
 const pageSize = 10;
 const fmtCcy = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' })
   .format;
-const fmtNum = new Intl.NumberFormat('en-US').format;
 
 export function PaginationBuiltin() {
   const { columns, setColumns } = useColumns<DigitalAsset>([
@@ -60,7 +61,7 @@ export function PaginationBuiltin() {
       header: 'Price (USD)',
       width: 160,
       getValue: (asset, source) =>
-        source !== ValueSource.Sort ? fmtCcy(asset.price_usd) : asset.price_usd,
+        source === ValueSource.Cell ? fmtCcy(asset.price_usd) : asset.price_usd,
       align: ColumnAlign.End,
     },
     {
@@ -69,7 +70,7 @@ export function PaginationBuiltin() {
       width: '1fr',
       minWidth: 160,
       getValue: (asset, source) =>
-        source !== ValueSource.Sort ? fmtCcy(asset.market_cap_usd) : asset.market_cap_usd,
+        source === ValueSource.Cell ? fmtCcy(asset.market_cap_usd) : asset.market_cap_usd,
       align: ColumnAlign.End,
     },
     {
@@ -77,7 +78,7 @@ export function PaginationBuiltin() {
       header: 'Volume (24h)',
       width: 160,
       getValue: (asset, source) =>
-        source !== ValueSource.Sort ? fmtNum(asset.volume24) : asset.volume24,
+        source === ValueSource.Cell ? fmtCcy(asset.volume24) : asset.volume24,
       align: ColumnAlign.End,
     },
   ]);
@@ -93,6 +94,13 @@ export function PaginationBuiltin() {
     pageSize,
   });
 
+  function handleExportClick() {
+    saveToCsv({
+      columns,
+      data: top100cryptos.data,
+    });
+  }
+
   return (
     <>
       <p>
@@ -100,6 +108,9 @@ export function PaginationBuiltin() {
           <option value={Direction.Ltr}>Left to right</option>
           <option value={Direction.Rtl}>Right to left</option>
         </select>
+        <button style={{ marginLeft: 16 }} onClick={handleExportClick}>
+          Export to CSV
+        </button>
       </p>
       <Grid<DigitalAsset>
         direction={direction}

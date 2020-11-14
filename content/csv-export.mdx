@@ -4,7 +4,7 @@ description: Learn how to export grid data to CSV
 ---
 
 import { Showcase } from '../src/components';
-import { DirectionRtl } from '../examples';
+import { PaginationBuiltin } from '../examples';
 
 While there's nothing stopping from using your own or third party code, Puregrid provides a `saveToCsv(props)` method for convenience.
 
@@ -27,10 +27,14 @@ import { saveToCsv } from '@puregrid/core';
 // An `onClick` handler for some button you have created.
 function onExportClick() {
   saveToCsv({
-    data,
     columns,
+    data,
   });
 }
 ```
 
 ## Example
+
+<Showcase fileName="PaginationBuiltin.tsx">
+  <PaginationBuiltin />
+</Showcase>
