@@ -24,7 +24,7 @@ You should set `group` to `true` on columns you want to group by:
 The next step is to define a group row renderer.
 
 ```tsx:title=Set+group+to+true
-const groupCell: GroupCellRenderer<Animal> = ({ column, row }) => {
+const GroupCell = ({ column, row }: GroupCellProps<Animal>) => {
   // Don't render anything on the group row except in the grouping cell.
   if (column.key !== row.data.colKey) {
     return null;
@@ -49,7 +49,7 @@ const groupCell: GroupCellRenderer<Animal> = ({ column, row }) => {
   );
 };
 
-<Grid<YourDataShape> groupCell={groupCell} />;
+<Grid<YourDataShape> GroupCell={GroupCell} />;
 ```
 
 Note that rather than use the `expanded` row state we use `row.data.expanded` because the `defaultExpandTo` option can influence the value.`

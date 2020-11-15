@@ -42,7 +42,8 @@ interface PriceChartProps {
 }
 
 function PriceChart({ row }: PriceChartProps) {
-  const { ref, width, height } = useResizeObserver<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
+  const { width, height } = useResizeObserver<HTMLDivElement>({ ref });
   const chart = useRef<IChartApi>();
 
   useEffect(() => {
@@ -185,7 +186,7 @@ export function MasterDetailsRows() {
       // if you do specify it then you're likely to want a different height
       // for details rows.
       getRowSize={row => (row.type === RowType.DetailsRow ? 301 : 40)}
-      detailsRow={PriceChart}
+      DetailsRow={PriceChart}
       stickyDetailsRow
       cellRenderers={cellRenderers}
     />

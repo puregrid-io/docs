@@ -9,7 +9,7 @@ import {
   useClientRows,
   HeaderRenderers,
   ColumnAlign,
-  GroupCellRenderer,
+  GroupCellComponent,
   CellRenderers,
   Button,
   useRowState,
@@ -101,7 +101,7 @@ export function ClientRowGrouping() {
     rowState: getRowState(),
   });
 
-  const groupCell: GroupCellRenderer<Winner> = ({ column, row }) => {
+  const GroupCell: GroupCellComponent<Winner> = ({ column, row }) => {
     // Don't render anything on the group row except in the grouping cell.
     if (column.key !== row.data.colKey) {
       return null;
@@ -132,7 +132,7 @@ export function ClientRowGrouping() {
       columns={columns}
       onColumnsChange={setColumns}
       headerRenderers={headerRenderers}
-      groupCell={groupCell}
+      GroupCell={GroupCell}
       cellRenderers={cellRenderers}
       defaultColumn={{
         cellRenderer: 'default',

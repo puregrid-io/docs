@@ -1,5 +1,11 @@
-import React, { useRef, useState } from 'react';
-import { Grid, useColumns, ColumnAlign, useClientRows } from '@puregrid/core';
+import React, { useState } from 'react';
+import {
+  Grid,
+  useColumns,
+  ColumnAlign,
+  useClientRows,
+  LoadingStyle,
+} from '@puregrid/core';
 import { generatePeople } from '../src/utils';
 
 interface Person {
@@ -72,7 +78,8 @@ export function InfiniteScroll() {
       onColumnsChange={setColumns}
       rows={rows}
       onScroll={handleScroll}
-      loadingMore={fetching}
+      loading={fetching}
+      loadingStyle={LoadingStyle.Bottom}
     />
   );
 }

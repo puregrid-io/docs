@@ -19,7 +19,7 @@ interface Product {
   };
 }
 
-const pageSize = 5;
+const pageSize = 10;
 
 export function ColumnGrouping() {
   const { columns, setColumns } = useColumns<Product>([

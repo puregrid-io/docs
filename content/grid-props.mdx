@@ -8,104 +8,45 @@ import { NoRows } from '../examples';
 
 Puregrid is declarative and controlled by props, there is no imperative API to learn. The grid is also mostly controlled by state that you own, which is modified via callbacks.
 
-```tsx:title=A+quick+peak+at+all+available+Grid+props
-// Obviously you don't need to and probably don't want to specify
-// all these options.
-<Grid<YourDataShape>
-  direction={Direction.Rtl}
-  theme={myCustomTheme}
-  columns={columns}
-  defaultColumn={{
-    width: 140,
-  }}
-  defaultColumnGroup={{
-    resizable: false,
-  }}
-  onColumnsChange={setColumns}
-  rows={rows}
-  noRowsNode="Loading..."
-  virtualRows
-  getRowSize={() => 40}
-  ssrHeight={800}
-  cellRenderers={cellRenderers}
-  wrapCells
-  detailsRow={({ row }) => <div>{row.data}</div>}
-  groupCell={groupCell}
-  filterRenderers={filterRenderers}
-  footer={
-    <Pagination
-      itemCount={data.length}
-      pageIndex={pageIndex}
-      pageSize={pageSize}
-      onPageChange={setPageIndex}
-    />
-  }
-/>
-```
+## Required props
 
-You can also pass div HTML attributes in:
+| Property | Description                                                                                                                                                                                                                                                                          |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| columns  | The column and column group definitions array. See [Column Definitions](/columns/column-definitions) docs.                                                                                                                                                                           |
+| rows     | Row data array which conforms to a specific shape and contains your data as well as meta data about the row. For client-side rows this is the result of `useClientRows` and for server-side rows it is shaped by you. See [Client vs Server Rows](/rows/client-vs-server-rows) docs. |
 
-```tsx:title=Grid+HTML+attributes
-<Grid<YourDataShape>
-  style={{ width: 900, height: 500 }}
-  data-test-selector="my-grid"
-/>
-```
+## Optional grid props
 
-## Columns
+| Property     | Description                                                                                                                                                                                          |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| direction    | The locale direction of content such as text. Defaults to `Direction.Ltr` (left-to-right) otherwise can be set to `Direction.Rtl`.                                                                   |
+| theme        | A theme object to pass in. There's a light and dark theme built in you can extend. Defaults to the light theme. See [Styling](/styling) docs.                                                        |
+| loading      | When set to `true` a loading indicator covers the grid or appears below the grid body depending on the `loadingStyle` and `loadingNode`.                                                             |
+| loadingStyle | Whether the loader should be overlaid over the grid body or inserted below it. Defaults to `LoadingStyle.Auto` which means it will be an overlay if there are rows or otherwise below the grid body. |
+| loadingNode  | The ReactNode to render when the `loading` flag is `true`. By default it's a <Spinner /> supplied by the library.                                                                                    |
+| footer       | A ReactNode to render in the footer below the grid. See [Pagination](/rows/pagination) docs for an example of rendering pagination here.                                                             |
+| ssrHeight    | If you're using [Virtual Rows](/rows/virtual-rows) then you can set a starting grid height if you're having trouble with SSR (Server Side Rendering), otherwise this option can be ignored.          |
+| onScroll     | A scroll callback that can be used for infinite scrolling or rendering lightweight alternative cell contents during scrolling. See [Infinite Scrolling](/rows/infinite-scrolling) docs.              |
 
-You pass in a `columns` definition array and if you want the grid to handle resize, reorder, or sorting changes you should also pass an `onColumnsChange` handler.
+## Optional column props
 
-Additionally you can pass in `defaultColumn` and `defaultColumnGroup` objects to control the default options for columns and column groups. See [Column Basics](/columns/column-basics).
+| Property           | Description                                                                                                                                                                                      |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| onColumnsChange    | A callback you must implement for anything in the `columns` to change (e.g. resizing and re-ordering). See any example in the docs.                                                              |
+| defaultColumn      | An object with defaults you want to set on all columns. See [Column Definitions](/columns/column-definitions) docs.                                                                              |
+| defaultColumnGroup | An object with defaults you want to set on all column groups. See [Column Definitions](/columns/column-definitions) docs.                                                                        |
+| headerRenderers    | An object of header elements if you want to render more than simple text. The keys are referenced by the `header` of column definitions. See [Header Rendering](/columns/header-rendering) docs. |
+| filterRenderers    | An object of column filter controls e.g. a text input. The keys are referenced by the `filterRenderer` of column definitions. See [Column Filtering](/columns/column-filtering) docs.            |
 
-## Rows
+## Optional row & cell props
 
-You don't pass your data directly into the grid, instead you pass it into `useClientRows` and this gives you back rows (potentially grouped, sorted, paginated, and filtered) that the grid can work with. See [Row Basics](/rows/row-basics) and [Serverside Guide](/rows/serverside-rows).
-
-## Renderers
-
-The only renderer which lives in column definitions is the `header` because it's unlikely to frequently change (e.g. as you type). Other renderers are passed directly into the grid and in the case of cells and filters specified in the column definitions as strings.
-
-### cellRenderers
-
-A key-value object of cell renderers, the key is referenced in column definitions and the value is a function which takes a column and row and returns a `ReactNode`. See [Cell Rendering](/cells/cell-rendering).
-
-### groupCell
-
-A renderer function which takes a column and row and returns a `ReactNode` for grouping rows. See [Row Grouping](/rows/row-grouping).
-
-### detailsRow
-
-A renderer function which is given a details row object and returns a `ReactNode`. See [Master-details rows](/rows/master-details-rows).
-
-### filterRenderers
-
-A key-value object of cell renderers, the key is referenced in column definitions and the value is a function which takes a column and row and returns a `ReactNode`. See [Column Filtering](/columns/column-filtering).
-
-## noRowsNode
-
-Allows you to render something custom when there are no rows such as a loading spinner or a message (or both). It defaults to `null` and any `ReactNode` is permitted.
-
-<Showcase fileName="NoRows.tsx">
-  <NoRows />
-</Showcase>
-
-## virtualRows
-
-You can toggle on virtual rows so that only rows in view are rendered. Rows must have a fixed height when using this option. See [Virtual Rows](/rows/virtual-rows).
-
-## getRowSize
-
-Set the row height. You are passed the row so can adjust the height based on the type (a normal row, groping row, or details row), or even the row data. This **must** be set when passing `virtualRows` into the `<Grid />`. See [Virtual Rows](rows/virtual-rows).
-
-## direction
-
-You can orient the grid for RTL (Right to left languages) with the `direction` prop. See [RTL (Right to left)](/rtl).
-
-## theme
-
-You can pass a JS object for theming as an alternative to CSS Variables. See [Styling](/styling)
-
-## footer
-
-You can pass any `ReactNode` to `footer`, checkout [Pagination](/rows/pagination) for an example.
+| Property         | Description                                                                                                                                                                                                                                                                                                                                          |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| getRowSize       | Set the row height. You're passed the row so you can adjust the height based on the type (a normal, grouping, or details row), or even the row data. This must be set when passing `virtualRows` into the `Grid`. See [Virtual Rows](/rows/virtual-rows) docs.                                                                                       |
+| virtualRows      | If enabled, rows are lazily rendered to fill only the viewport. Useful if you want to use lazy/infinite rendering rather than paging as you can render a very large amount of rows without performance issues. You must implement `getRowSize` if you use this as row heights need to be fixed upfront. See [Virtual Rows](/rows/virtual-rows) docs. |
+| cellRenderers    | An object of cell renderer components if you want to render more than plain text. The keys are referenced by `cellRenderer` in column definitions. See [Cell Rendering](/cells/cell-rendering) docs.                                                                                                                                                 |
+| GroupCell        | A cell component that's used for rendering the cells of a grouping row. See [Row Grouping](/rows/row-grouping) docs.                                                                                                                                                                                                                                 |
+| DetailsRow       | A row component for a details row. See [Master-Detail Rows](/rows/master-details-rows) docs.                                                                                                                                                                                                                                                         |
+| stickyDetailsRow | Set to `true` (default) if you want details row to "stick" in view as the users scrolls horizontally.                                                                                                                                                                                                                                                |
+| noRowsNode       | The ReactNode to render when there's no data. If omitted then nothing is rendered.                                                                                                                                                                                                                                                                   |
+| wrapCells        | Whether to allow cell content to wrap (multi-line), defaults to `false`.                                                                                                                                                                                                                                                                             |

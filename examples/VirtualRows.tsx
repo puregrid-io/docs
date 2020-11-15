@@ -16,7 +16,7 @@ export function VirtualRows() {
     {
       key: 'year',
       header: 'Year',
-      width: 120,
+      width: 100,
       getValue: winner => winner.year,
     },
     {
@@ -66,7 +66,7 @@ export function VirtualRows() {
         {
           key: 'total',
           header: 'Total',
-          width: 50,
+          width: 70,
           getValue: winner => winner.total,
           align: ColumnAlign.End,
         },

@@ -29,7 +29,7 @@ The final step is to pass in a `detailsRow` component prop.
 
 ```tsx:title=Details+Row+interface
 <Grid<Stock>
-  detailsRow={
+  DetailsRow={
     ({ row }) => <Chart data={row.data} /> // `timeSeries` returned in `getRowDetails`
   }
 />

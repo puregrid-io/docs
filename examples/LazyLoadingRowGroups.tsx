@@ -3,7 +3,7 @@ import { AiOutlineRight, AiOutlineDown } from 'react-icons/ai';
 import {
   Grid,
   useColumns,
-  GroupCellRenderer,
+  GroupCellProps,
   CellRenderers,
   useRowState,
   RowType,
@@ -12,6 +12,7 @@ import {
   css,
   useStyle,
 } from '@puregrid/core';
+import { LoadingStyle } from '@puregrid/core/src/types';
 
 interface Animal {
   species: string;
@@ -131,7 +132,7 @@ export function LazyLoadingRowGroups() {
     fetchRows(getRowState('species:Mammal').expanded);
   }, [getRowState('species:Mammal').expanded]);
 
-  const groupCell: GroupCellRenderer<Animal> = ({ column, row }) => {
+  const GroupCell = ({ column, row }: GroupCellProps<Animal>) => {
     // Don't render anything on the group row except in the grouping cell.
     if (column.key !== row.data.colKey) {
       return null;
@@ -159,7 +160,7 @@ export function LazyLoadingRowGroups() {
     <Grid<Animal>
       columns={columns}
       onColumnsChange={setColumns}
-      groupCell={groupCell}
+      GroupCell={GroupCell}
       cellRenderers={cellRenderers}
       defaultColumn={{
         cellRenderer: 'default',
