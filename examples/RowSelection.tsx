@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Grid,
   useColumns,
   ColumnAlign,
   useClientRows,
-  HeaderRenderers,
-  CellRenderers,
+  HeaderComponents,
+  CellComponents,
   useRowState,
 } from '@puregrid/core';
 
@@ -40,14 +40,21 @@ const data: Person[] = [
 
 export function RowSelection() {
   const [allSelected, setAllSelected] = useState(false);
-  const { getRowState, setRowState } = useRowState();
+  const { getRowState, setRowState, resetRowState } = useRowState();
+
+  // Remove all individually selected checkboxes if "Select All" is unchecked.
+  useEffect(() => {
+    if (!allSelected) {
+      resetRowState();
+    }
+  }, [allSelected]);
 
   const { columns, setColumns } = useColumns<Person>([
     {
       key: 'select',
       header: 'Select All',
       getValue: person => getRowState(person.uid).selected,
-      cellRenderer: 'selectRow',
+      cellComponent: 'selectRow',
       width: 40,
       pinned: true,
     },
@@ -73,7 +80,7 @@ export function RowSelection() {
     rowState: getRowState(),
   });
 
-  const headerRenderers: HeaderRenderers<Person> = {
+  const headerComponents: HeaderComponents<Person> = {
     'Select All': () => (
       <input
         type="checkbox"
@@ -87,7 +94,7 @@ export function RowSelection() {
     ),
   };
 
-  const cellRenderers: CellRenderers<Person> = {
+  const cellComponents: CellComponents<Person> = {
     selectRow: ({ row }) => (
       <input
         type="checkbox"
@@ -104,8 +111,8 @@ export function RowSelection() {
       columns={columns}
       onColumnsChange={setColumns}
       rows={rows}
-      headerRenderers={headerRenderers}
-      cellRenderers={cellRenderers}
+      headerComponents={headerComponents}
+      cellComponents={cellComponents}
     />
   );
 }

@@ -9,7 +9,7 @@ import {
   RowType,
   DetailsRow,
   useRowState,
-  CellRenderers,
+  CellComponents,
   Button,
   css,
   useStyle,
@@ -130,7 +130,7 @@ export function MasterDetailsRows() {
       header: null,
       width: 52,
       getValue: stock => getRowState(stock.metaData.symbol).expanded,
-      cellRenderer: 'expandRow',
+      cellComponent: 'expandRow',
       pinned: true,
     },
     {
@@ -162,7 +162,7 @@ export function MasterDetailsRows() {
     rowState: getRowState(),
   });
 
-  const cellRenderers: CellRenderers<Stock> = {
+  const cellComponents: CellComponents<Stock> = {
     expandRow: ({ row }) => {
       const { expanded } = getRowState(row.key);
       return (
@@ -188,7 +188,7 @@ export function MasterDetailsRows() {
       getRowSize={row => (row.type === RowType.DetailsRow ? 301 : 40)}
       DetailsRow={PriceChart}
       stickyDetailsRow
-      cellRenderers={cellRenderers}
+      cellComponents={cellComponents}
     />
   );
 }

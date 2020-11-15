@@ -13,7 +13,7 @@ By default the value returned by `getValue` in the column definition will be ren
 ```tsx:title=Setting+a+default+cell+renderer
 <Grid
   defaultColumn={{
-    cellRenderer: 'myCustomRenderer',
+    cellComponent: 'myCustomRenderer',
   }}
 />
 ```
@@ -26,7 +26,7 @@ const { columns, setColumns } = useColumns<YourDataShape>([
     key: 'someColumn',
     header: 'Some Column',
     getValue: item => item.something,
-    cellRenderer: 'myCustomRenderer',
+    cellComponent: 'myCustomRenderer',
   },
 ]);
 ```
@@ -34,7 +34,7 @@ const { columns, setColumns } = useColumns<YourDataShape>([
 Finally you need to define a renderer for 'myCustomRenderer' and pass it into the `<Grid />`.
 
 ```tsx:title=Defining+the+cell+renderer
-const cellRenderers: CellRenderers<YourDataShape> = {
+const cellComponents: CellComponents<YourDataShape> = {
   myCustomRenderer: ({ column, row }) => (
     <strong>{column.getValue(row.data)}</strong>
   ),
@@ -44,7 +44,7 @@ const cellRenderers: CellRenderers<YourDataShape> = {
   columns={columns}
   onColumnsChange={setColumns}
   rows={rows}
-  cellRenderers={cellRenderers}
+  cellComponents={cellComponents}
 />;
 ```
 

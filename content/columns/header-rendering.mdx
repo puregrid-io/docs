@@ -8,7 +8,7 @@ import { HeaderRendering } from '../../examples';
 
 ## Overview
 
-The `header` option **must** be a string. If you want to render a custom `ReactNode` or dynamic value then you should implement a renderer in `headerRenderers`.
+The `header` option **must** be a string. If you want to render a custom `ReactNode` or dynamic value then you should implement a renderer in `headerComponents`.
 
 ```tsx:title=Custom+header+rendering
 const [allSelected, setAllSelected] = useState(false);
@@ -20,12 +20,12 @@ const { columns, setColumns } = useColumns<Candidate>([
   },
 ]);
 
-const headerRenderers: HeaderRenderers<Candidate> = {
+const headerComponents: HeaderComponents<Candidate> = {
   selectAll: () => <input type="checkbox" checked={allSelected} />
 }
 
 <Grid
-  headerRenderers={headerRenderers}
+  headerComponents={headerComponents}
 />
 ```
 
@@ -42,7 +42,7 @@ const { columns, setColumns } = useColumns<Candidate>([
   },
 ]);
 
-const headerRenderers: HeaderRenderers<Candidate> = {
+const headerComponents: HeaderComponents<Candidate> = {
   Occupation: () => t('Occupation'),
 };
 ```

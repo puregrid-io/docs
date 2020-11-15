@@ -32,7 +32,7 @@ getRowState();
 getRowState('someRowKey');
 ```
 
-Like with React state there are two ways to set state:
+As with React state there are two ways to set state:
 
 ```ts:title=Setting+row+state
 // The object you pass will be MERGED into existing state.
@@ -49,10 +49,6 @@ There's also a `resetRowState` incase you want to replace all row state:
 resetRowState({});
 ```
 
-## Example: Row selection
+## Example
 
-Since row state is in your hands you can easily implement something like row selection.
-
-<Showcase fileName="RowSelection.tsx">
-  <RowSelection />
-</Showcase>
+See [Row Selection](rows/row-selection) for an example of using row state.

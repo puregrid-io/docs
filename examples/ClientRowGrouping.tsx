@@ -7,10 +7,10 @@ import {
   Grid,
   useColumns,
   useClientRows,
-  HeaderRenderers,
+  HeaderComponents,
   ColumnAlign,
   GroupCellComponent,
-  CellRenderers,
+  CellComponents,
   Button,
   useRowState,
   css,
@@ -18,7 +18,7 @@ import {
 } from '@puregrid/core';
 
 import olympicWinners from '../static/olympicWinnersSmall.json';
-import { Winner, headerRenderers } from '../src/utils/olympicWinnerHelpers';
+import { Winner, headerComponents } from '../src/utils/olympicWinnerHelpers';
 
 export function ClientRowGrouping() {
   useStyle('client-row-grouping', componentStyles);
@@ -122,7 +122,7 @@ export function ClientRowGrouping() {
   };
 
   // Don't render the grouped values as they can be seen on the grouping rows.
-  const cellRenderers: CellRenderers<Winner> = {
+  const cellComponents: CellComponents<Winner> = {
     default: ({ column, row }) => !column.group && column.getValue(row.data),
   };
 
@@ -131,11 +131,11 @@ export function ClientRowGrouping() {
       style={{ height: 600 }}
       columns={columns}
       onColumnsChange={setColumns}
-      headerRenderers={headerRenderers}
+      headerComponents={headerComponents}
       GroupCell={GroupCell}
-      cellRenderers={cellRenderers}
+      cellComponents={cellComponents}
       defaultColumn={{
-        cellRenderer: 'default',
+        cellComponent: 'default',
       }}
       rows={rows}
       getRowSize={() => 40}

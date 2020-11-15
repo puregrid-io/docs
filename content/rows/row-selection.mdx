@@ -1,0 +1,87 @@
+---
+title: Row Selection
+description: Learn how to implement row state by selection rows
+---
+
+import { Showcase } from '../../src/components';
+import { RowSelection } from '../../examples';
+
+Puregrid is flexible and unopinionated about what you render in a cell, combine that with [row state](/rows/row-state) and you can implement row selection.
+
+Firstly let's create row state as well as some extra state for the "Select All" checkbox in the header:
+
+```ts:title=Create+row+state
+const [allSelected, setAllSelected] = useState(false);
+const { getRowState, setRowState } = useRowState();
+```
+
+Next we set up columns and rows as usual, passing in a checkbox `cellComponent` and `rowState` into `useClientRows`:
+
+```ts:title=Setup+columns+and+rows
+const { columns, setColumns } = useColumns<Person>([
+  {
+    key: 'select',
+    header: 'Select All',
+    getValue: person => getRowState(person.uid).selected,
+    cellComponent: 'selectRow',
+    width: 40,
+    pinned: true,
+  },
+  {
+    key: 'name',
+    header: 'Name',
+    getValue: person => person.name,
+    width: 180,
+  },
+  {
+    key: 'age',
+    header: 'Age',
+    getValue: person => person.age,
+    align: ColumnAlign.End,
+    width: 80,
+  },
+]);
+
+const rows = useClientRows<Person>({
+  columns,
+  data,
+  getItemId: person => person.uid,
+  rowState: getRowState(),
+});
+```
+
+Finally we define some custom components to manipulate the row state:
+
+```ts:title=Row+selection+components
+const headerComponents: HeaderComponents<Person> = {
+  'Select All': () => (
+    <input
+      type="checkbox"
+      checked={allSelected}
+      onChange={e => {
+        // Prevent default stops the column from doing a sort.
+        e.stopPropagation();
+        setAllSelected(e.currentTarget.checked);
+      }}
+    />
+  ),
+};
+
+const cellComponents: CellComponents<Person> = {
+  selectRow: ({ row }) => (
+    <input
+      type="checkbox"
+      checked={allSelected || getRowState(row.key).selected}
+      onChange={e =>
+        setRowState(row.key, { selected: e.currentTarget.checked })
+      }
+    />
+  ),
+};
+```
+
+## Example
+
+<Showcase fileName="RowSelection.tsx">
+  <RowSelection />
+</Showcase>

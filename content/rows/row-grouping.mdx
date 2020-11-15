@@ -80,13 +80,13 @@ If you set `defaultExpandTo` to `-1` it will expand all groups by default.
 Another nice touch you might notice in the example is to not render values in cells which are grouped on normal rows (expand until you see normal rows).
 
 ```tsx:title=Don't+render+group+columns+in+normal+rows
-const cellRenderers: CellRenderers<Winner> = {
+const cellComponents: CellComponents<Winner> = {
   default: ({ column, row }) => !column.group && column.getValue(row.data),
 };
 
 <Grid<Winner>
   defaultColumn={{
-    cellRenderer: 'default',
+    cellComponent: 'default',
   }}
 />;
 ```

@@ -5,7 +5,7 @@ import {
   Columns,
   useColumns,
   useFilterState,
-  FilterRenderers,
+  FilterComponents,
   ColumnAlign,
   ColumnsChangeDetails,
   ColumnsChangeType,
@@ -15,7 +15,7 @@ import {
 } from '@puregrid/core';
 
 import { getRows } from '../fakeServer';
-import { Winner, headerRenderers } from '../src/utils/olympicWinnerHelpers';
+import { Winner, headerComponents } from '../src/utils/olympicWinnerHelpers';
 
 const pageSize = 10;
 
@@ -29,7 +29,7 @@ export function ServersideRows() {
       minWidth: 120,
       getValue: winner => winner.country,
       group: true,
-      filterRenderer: 'string',
+      filterComponent: 'string',
       filter: 'partialStringMatch',
     },
     {
@@ -38,7 +38,7 @@ export function ServersideRows() {
       width: 120,
       getValue: winner => winner.year,
       group: true,
-      filterRenderer: 'number',
+      filterComponent: 'number',
       filter: 'exactMatch',
     },
     {
@@ -46,7 +46,7 @@ export function ServersideRows() {
       header: 'Date',
       width: 100,
       getValue: winner => winner.date,
-      filterRenderer: 'string',
+      filterComponent: 'string',
       filter: 'partialStringMatch',
     },
     {
@@ -55,7 +55,7 @@ export function ServersideRows() {
       width: '1fr',
       minWidth: 120,
       getValue: winner => winner.athlete,
-      filterRenderer: 'string',
+      filterComponent: 'string',
       filter: 'partialStringMatch',
     },
     {
@@ -63,7 +63,7 @@ export function ServersideRows() {
       header: 'Sport',
       width: 100,
       getValue: winner => winner.sport,
-      filterRenderer: 'string',
+      filterComponent: 'string',
       filter: 'partialStringMatch',
     },
     {
@@ -76,7 +76,7 @@ export function ServersideRows() {
           width: 60,
           getValue: winner => winner.gold,
           align: ColumnAlign.End,
-          filterRenderer: 'number',
+          filterComponent: 'number',
           filter: 'exactMatch',
         },
         {
@@ -85,7 +85,7 @@ export function ServersideRows() {
           width: 60,
           getValue: winner => winner.silver,
           align: ColumnAlign.End,
-          filterRenderer: 'number',
+          filterComponent: 'number',
           filter: 'exactMatch',
         },
         {
@@ -94,7 +94,7 @@ export function ServersideRows() {
           width: 60,
           getValue: winner => winner.bronze,
           align: ColumnAlign.End,
-          filterRenderer: 'number',
+          filterComponent: 'number',
           filter: 'exactMatch',
         },
         {
@@ -103,7 +103,7 @@ export function ServersideRows() {
           width: 60,
           getValue: winner => winner.total,
           align: ColumnAlign.End,
-          filterRenderer: 'number',
+          filterComponent: 'number',
           filter: 'exactMatch',
         },
       ],
@@ -160,7 +160,7 @@ export function ServersideRows() {
     });
   }
 
-  const filterRenderers: FilterRenderers<Winner> = {
+  const filterComponents: FilterComponents<Winner> = {
     string: ({ column }) => (
       <Input
         value={getFilterState(column.key)}
@@ -183,8 +183,8 @@ export function ServersideRows() {
   return (
     <Grid<Winner>
       columns={columns}
-      filterRenderers={filterRenderers}
-      headerRenderers={headerRenderers}
+      filterComponents={filterComponents}
+      headerComponents={headerComponents}
       onColumnsChange={handleColumnsChange}
       rows={serverRows.rows}
       loading={loading}

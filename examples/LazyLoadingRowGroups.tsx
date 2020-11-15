@@ -4,7 +4,7 @@ import {
   Grid,
   useColumns,
   GroupCellProps,
-  CellRenderers,
+  CellComponents,
   useRowState,
   RowType,
   Row,
@@ -152,7 +152,7 @@ export function LazyLoadingRowGroups() {
   };
 
   // Don't render the grouped values as they can be seen on the grouping rows.
-  const cellRenderers: CellRenderers<Animal> = {
+  const cellComponents: CellComponents<Animal> = {
     default: ({ column, row }) => !column.group && column.getValue(row.data),
   };
 
@@ -161,9 +161,9 @@ export function LazyLoadingRowGroups() {
       columns={columns}
       onColumnsChange={setColumns}
       GroupCell={GroupCell}
-      cellRenderers={cellRenderers}
+      cellComponents={cellComponents}
       defaultColumn={{
-        cellRenderer: 'default',
+        cellComponent: 'default',
       }}
       rows={rows}
       loading={loading}

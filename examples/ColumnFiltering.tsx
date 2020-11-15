@@ -3,8 +3,8 @@ import {
   Grid,
   useColumns,
   DerivedColumn,
-  CellRenderers,
-  FilterRenderers,
+  CellComponents,
+  FilterComponents,
   ColumnAlign,
   useClientRows,
   useFilterState,
@@ -71,7 +71,7 @@ export function ColumnFiltering() {
       header: 'Name',
       width: 140,
       getValue: c => c.name,
-      filterRenderer: 'string',
+      filterComponent: 'string',
       filter: 'partialStringMatch',
     },
     {
@@ -79,7 +79,7 @@ export function ColumnFiltering() {
       header: 'Age',
       width: 140,
       getValue: c => c.age,
-      filterRenderer: 'number',
+      filterComponent: 'number',
       filter: 'exactMatch',
       align: ColumnAlign.End,
     },
@@ -88,8 +88,8 @@ export function ColumnFiltering() {
       header: 'Resident',
       width: 100,
       getValue: c => c.resident,
-      cellRenderer: 'boolean',
-      filterRenderer: 'boolean',
+      cellComponent: 'boolean',
+      filterComponent: 'boolean',
       filter: 'booleanFilter',
       align: ColumnAlign.End,
     },
@@ -107,7 +107,7 @@ export function ColumnFiltering() {
     filterMethods: { booleanFilter },
   });
 
-  const filterRenderers: FilterRenderers<Candidate> = {
+  const filterComponents: FilterComponents<Candidate> = {
     string: ({ column }) => (
       <input
         value={getFilterState(column.key)}
@@ -135,7 +135,7 @@ export function ColumnFiltering() {
     ),
   };
 
-  const cellRenderers: CellRenderers<Candidate> = {
+  const cellComponents: CellComponents<Candidate> = {
     default: ({ column, row }) => column.getValue(row.data),
     boolean: ({ column, row }) => (
       <input type="checkbox" readOnly checked={column.getValue(row.data)} />
@@ -156,8 +156,8 @@ export function ColumnFiltering() {
         columns={columns}
         onColumnsChange={setColumns}
         rows={rows}
-        cellRenderers={cellRenderers}
-        filterRenderers={filterRenderers}
+        cellComponents={cellComponents}
+        filterComponents={filterComponents}
       />
     </>
   );

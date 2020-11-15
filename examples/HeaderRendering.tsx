@@ -4,7 +4,7 @@ import {
   Grid,
   useColumns,
   useClientRows,
-  HeaderRenderers,
+  HeaderComponents,
   HeaderProps,
 } from '@puregrid/core';
 
@@ -58,7 +58,7 @@ export function HeaderRendering() {
     getItemId: person => person.uid,
   });
 
-  const headerRenderers: HeaderRenderers<Person> = {
+  const headerComponents: HeaderComponents<Person> = {
     Name: BoldUnderline,
     Location: () => <GrLocation />,
   };
@@ -68,7 +68,7 @@ export function HeaderRendering() {
       columns={columns}
       onColumnsChange={setColumns}
       rows={rows}
-      headerRenderers={headerRenderers}
+      headerComponents={headerComponents}
     />
   );
 }

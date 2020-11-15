@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   Grid,
   useColumns,
-  CellRenderers,
+  CellComponents,
   useClientRows,
   CellEditor,
   Read,
@@ -25,7 +25,7 @@ export function CellEditing() {
       header: 'First name',
       width: '1fr',
       minWidth: 120,
-      cellRenderer: 'textInput',
+      cellComponent: 'textInput',
       getValue: person => person.firstName,
       setValue: (person: Person, newValue: string) => ({
         ...person,
@@ -37,7 +37,7 @@ export function CellEditing() {
       header: 'Last name',
       width: '1fr',
       minWidth: 120,
-      cellRenderer: 'textInput',
+      cellComponent: 'textInput',
       getValue: person => person.lastName,
       setValue: (person: Person, newValue: string) => ({
         ...person,
@@ -48,8 +48,8 @@ export function CellEditing() {
       key: 'dateOfBirth',
       header: 'Date Of Birth',
       width: 160,
-      cellRenderer: 'textInput',
-      cellRendererInputType: 'date',
+      cellComponent: 'textInput',
+      cellComponentInputType: 'date',
       getValue: person => person.dateOfBirth,
       setValue: (person: Person, newValue: string) => ({
         ...person,
@@ -97,7 +97,7 @@ export function CellEditing() {
     }
   }
 
-  const cellRenderers: CellRenderers = {
+  const cellComponents: CellComponents = {
     textInput: ({ column, row }) => (
       <CellEditor>
         <Read>{column.getValue(row.data)}</Read>
@@ -107,7 +107,7 @@ export function CellEditing() {
         >
           {({ intermediateValue, setIntermediateValue }) => (
             <input
-              type={column.cellRendererInputType || 'text'}
+              type={column.cellComponentInputType || 'text'}
               value={intermediateValue}
               onChange={e => setIntermediateValue(e.currentTarget.value)}
             />
@@ -122,7 +122,7 @@ export function CellEditing() {
       columns={columns}
       onColumnsChange={setColumns}
       rows={rows}
-      cellRenderers={cellRenderers}
+      cellComponents={cellComponents}
     />
   );
 }

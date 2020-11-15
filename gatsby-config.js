@@ -22,6 +22,7 @@ module.exports = {
           Rows: [
             'rows/client-vs-server-rows',
             'rows/row-state',
+            'rows/row-selection',
             'rows/pagination',
             'rows/infinite-scrolling',
             'rows/row-grouping',

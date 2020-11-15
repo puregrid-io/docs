@@ -3,7 +3,7 @@ import { BiMedal } from 'react-icons/bi';
 import { FaMedal } from 'react-icons/fa';
 import { RiMedal2Line } from 'react-icons/ri';
 
-import { HeaderRenderers } from '@puregrid/core';
+import { HeaderComponents } from '@puregrid/core';
 
 export interface Winner {
   id: string;
@@ -19,7 +19,7 @@ export interface Winner {
   total: number;
 }
 
-export const headerRenderers: HeaderRenderers<Winner> = {
+export const headerComponents: HeaderComponents<Winner> = {
   Gold: () => <FaMedal />,
   Silver: () => <BiMedal />,
   Bronze: () => <RiMedal2Line />,

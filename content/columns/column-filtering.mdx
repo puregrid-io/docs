@@ -8,7 +8,7 @@ import { ColumnFiltering } from '../../examples';
 
 ## Overview
 
-If you want to add a column filter you need to specify a `filter` string in the column definition. This string maps to a key in `filterMethods`, or the equivalent on your server. You also need to supply a `filterRenderer` string which is the name of the renderer that returns a component to do the actual filtering (e.g. a text box).
+If you want to add a column filter you need to specify a `filter` string in the column definition. This string maps to a key in `filterMethods`, or the equivalent on your server. You also need to supply a `filterComponent` string which is the name of the renderer that returns a component to do the actual filtering (e.g. a text box).
 
 ```ts:title=Specifying+a+column+filter
 const { columns, setColumns } = useColumns<User>([
@@ -18,7 +18,7 @@ const { columns, setColumns } = useColumns<User>([
     getValue: user => user.name,
     filter: 'someFilterFunction',
     // filter: 'partialStringMatch' // One of the built in filters.
-    filterRenderer: 'string',
+    filterComponent: 'string',
   },
 ]);
 ```
@@ -98,12 +98,12 @@ function turkishPartialMatch<T>(
 
 Puregrid doesn't come with built in filters because UI controls are highly subjective and there are a myriad of them available, or you might have your own.
 
-To define custom filter renderer(s) create an object where the key matches up to what you specified in the `filterRenderer` in the column definitions:
+To define custom filter renderer(s) create an object where the key matches up to what you specified in the `filterComponent` in the column definitions:
 
 ```ts:title=Defining+filter+renderers
 const { setFilterState, getFilterState } = useFilterState();
 
-const filterRenderers: FilterRenderers<Product> = {
+const filterComponents: FilterComponents<Product> = {
   string: ({ column }) => (
     <input
       value={getFilterState(column.key)}
@@ -119,7 +119,7 @@ And then pass them into the `<Grid />`:
 ```tsx:title=Pass+the+filter+renderers+into+the+Grid
 <Grid
   // ...
-  filterRenderers={filterRenderers}
+  filterComponents={filterComponents}
 />
 ```
 

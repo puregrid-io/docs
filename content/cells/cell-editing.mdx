@@ -52,7 +52,7 @@ How you update the data on the server is up to you.
 ## Edit controls based on mouse or touch input
 
 ```ts:title=Defining+the+cell+renderer
-const cellRenderers: CellRenderers<YourDataShape> = {
+const cellComponents: CellComponents<YourDataShape> = {
   checkbox: ({ column, row }) => (
     <input
       type="checkbox"
@@ -70,7 +70,7 @@ For keyboard input we recommend you use the `CellEditor` component. It's both mo
 In this case you can import `CellEditor` and render a readonly and editable component separately.
 
 ```ts:title=Custom+components+with+CellEditor
-const cellRenderers: CellRenderers<YourDataShape> = {
+const cellComponents: CellComponents<YourDataShape> = {
   textInput: ({ column, row }) => (
     <CellEditor>
       <Read>{column.getValue(row.data)}</Read>

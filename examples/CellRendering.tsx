@@ -1,6 +1,6 @@
 import React from 'react';
 import { Sparklines, SparklinesLine } from 'react-sparklines';
-import { Grid, useColumns, CellRenderers, useClientRows } from '@puregrid/core';
+import { Grid, useColumns, CellComponents, useClientRows } from '@puregrid/core';
 
 type Price = number;
 
@@ -42,7 +42,7 @@ export function CellRendering() {
       header: 'Close (1w)',
       width: 200,
       getValue: stock => stock.closePrices,
-      cellRenderer: 'sparkline',
+      cellComponent: 'sparkline',
     },
   ]);
 
@@ -52,7 +52,7 @@ export function CellRendering() {
     getItemId: stock => stock.symbol,
   });
 
-  const cellRenderers: CellRenderers = {
+  const cellComponents: CellComponents = {
     sparkline: ({ column, row }) => (
       <Sparklines data={column.getValue(row.data)} width={100} height={20} margin={5}>
         <SparklinesLine color="blue" />
@@ -65,7 +65,7 @@ export function CellRendering() {
       columns={columns}
       onColumnsChange={setColumns}
       rows={rows}
-      cellRenderers={cellRenderers}
+      cellComponents={cellComponents}
     />
   );
 }
