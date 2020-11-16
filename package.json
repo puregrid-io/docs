@@ -10,7 +10,8 @@
     "clean": "gatsby clean"
   },
   "dependencies": {
-    "@puregrid/themes": "^0.0.1-alpha.0",
+    "@puregrid/core": "^0.0.3",
+    "@puregrid/themes": "^0.0.2",
     "cuid": "^2.1.8",
     "gatsby": "^2.26.1",
     "gatsby-theme-apollo-docs": "4.5.9",

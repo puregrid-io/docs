@@ -8,6 +8,8 @@ import {
   ColumnAlign,
   useClientRows,
   useFilterState,
+  Input,
+  InputSize,
 } from '@puregrid/core';
 
 interface Candidate {
@@ -109,17 +111,19 @@ export function ColumnFiltering() {
 
   const filterComponents: FilterComponents<Candidate> = {
     string: ({ column }) => (
-      <input
+      <Input
         value={getFilterState(column.key)}
         placeholder="Filter"
+        inputSize={InputSize.Small}
         onChange={e => setFilterState(column.key, e.target.value)}
       />
     ),
     number: ({ column }) => (
-      <input
+      <Input
         type="number"
         min="0"
         value={String(getFilterState(column.key))}
+        inputSize={InputSize.Small}
         onChange={e => setFilterState(column.key, Number(e.target.value))}
       />
     ),
