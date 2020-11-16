@@ -12,7 +12,6 @@ import {
   css,
   useStyle,
 } from '@puregrid/core';
-import { LoadingStyle } from '@puregrid/core/src/types';
 
 interface Animal {
   species: string;

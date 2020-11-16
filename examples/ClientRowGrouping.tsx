@@ -1,13 +1,9 @@
 import React from 'react';
-import { BiMedal } from 'react-icons/bi';
-import { FaMedal } from 'react-icons/fa';
-import { RiMedal2Line } from 'react-icons/ri';
 import { AiOutlineRight, AiOutlineDown } from 'react-icons/ai';
 import {
   Grid,
   useColumns,
   useClientRows,
-  HeaderComponents,
   ColumnAlign,
   GroupCellComponent,
   CellComponents,

@@ -10,7 +10,7 @@
     "clean": "gatsby clean"
   },
   "dependencies": {
-    "@puregrid/core": "^0.0.3",
+    "@puregrid/core": "^0.0.4",
     "@puregrid/themes": "^0.0.2",
     "cuid": "^2.1.8",
     "gatsby": "^2.26.1",

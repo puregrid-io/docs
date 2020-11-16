@@ -1500,10 +1500,26 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.5.4.tgz#de25b5da9f727985a3757fd59b5d028aba75841a"
   integrity sha512-ZpKr+WTb8zsajqgDkvCEWgp6d5eJT6Q63Ng2neTbzBO76Lbe91vX/iVIW9dikq+Fs3yEo+ls4cxeXABD2LtcbQ==
 
+"@puregrid/core@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@puregrid/core/-/core-0.0.4.tgz#702bf7e9bdb77a7993c4cb0239c6014285fa0b86"
+  integrity sha512-fCIufEYmmSX0A8FqKIdx6U75wpiwYscCOpFJw45NiW3xaBPZKw6/l6Z8LSUgBEmZMMdZtGVUZOAhfgcLX3PCxA==
+  dependencies:
+    "@puregrid/themes" "^0.0.1-alpha.0"
+    clsx "^1.1.1"
+    react-icons "^3.11.0"
+    shallowequal "^1.1.0"
+    use-resize-observer "^7.0.0"
+
 "@puregrid/themes@^0.0.1-alpha.0":
   version "0.0.1-alpha.0"
   resolved "https://registry.yarnpkg.com/@puregrid/themes/-/themes-0.0.1-alpha.0.tgz#bf8579a821d946dea44bc73809e11b0c709efd74"
   integrity sha512-eaKH/fECa2QCzKZsf2C3E4JcNEl/YhIPXrhNXMHp0Zq/E+7NF9KT8XUIdYJwqvG6ZJE76U01j4c9TN1w5ai7QQ==
+
+"@puregrid/themes@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@puregrid/themes/-/themes-0.0.2.tgz#0f9e3395bda307f4e1f636b4f4f3fde09be8d7cb"
+  integrity sha512-ibKbFwcT52t5V9InfrmpcwMNXBDufRpeJGMqCRY6dcuHfRkEZTcxXWj4KxLyAHtDn6xmXw068T2C47C9YXUqRA==
 
 "@reach/router@^1.3.4":
   version "1.3.4"
@@ -3660,6 +3676,11 @@ clone@~0.1.9:
   version "0.1.19"
   resolved "https://registry.yarnpkg.com/clone/-/clone-0.1.19.tgz#613fb68639b26a494ac53253e15b1a6bd88ada85"
   integrity sha1-YT+2hjmyaklKxTJT4Vsaa9iK2oU=
+
+clsx@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
+  integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
 
 coa@^2.0.2:
   version "2.0.2"
