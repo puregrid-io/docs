@@ -11,9 +11,9 @@ The basic components of the grid are as follows:
 - Column definitions.
 - A column change handler if you want the columns to be resizable, sortable or reorderable.
 - Rows (which can either come from your server or be derived from your data via `useClientRows`).
-- A unique property value per item. If your rows don't have one then add one at the point of creating the data object, a simple incrementing counter such as `` `id-${ref++}` `` will do as long as it's done once.
+- A unique ID per item. If your rows don't have one then add one at the point of creating/receiving the data. A simple incrementing counter such as `` `id-${ref++}` `` will do as long as it's done once.
 
-In the next chapters you can dive into Columns and Rows in detail but for now let's look at an example which covers the fundamentals.
+In the next chapters you can dive into columns and rows in detail but for now let's look at an example which covers the fundamentals.
 
 Note that throughout the docs we use Typescript so omit the types such as `Columns<Person>` and `<Person>` if you're using plain JS.
 

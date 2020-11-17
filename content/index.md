@@ -7,9 +7,10 @@ description: Intro and installation
 
 Puregrid is a datagrid for React. It was created after working on dozens of datagrids for some of the largest financial companies in the world. During that process we discovered how deficient the "industry leading" datagrids were behind their shiny websites and promises. Puregrid aims to be different in a number of ways:
 
-- Simple and consistent API, which is declarative (controlled and props driven), rather than imperative with mostly internal state.
+- Simple and consistent API, which is declarative (controlled and props driven), rather than imperative with internal state.
 - Lightweight and performant. Our Javascript, SVG, and CSS is ~45kb minified (including tree-shakable optional extras) while "industry leaders" are in the 1-2 **megabyte** range for the JavaScript only.
 - Other datagrids which support lots of frameworks use `ReactDOM.render` or `ReactDOM.createPortal` to render each cell individually with a significant performance penalty and possibly loss of React Context such as your theme settings.
+- Open source.
 
 ## Browser/device compatibility
 
