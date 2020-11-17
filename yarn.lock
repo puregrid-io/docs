@@ -1500,10 +1500,10 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.5.4.tgz#de25b5da9f727985a3757fd59b5d028aba75841a"
   integrity sha512-ZpKr+WTb8zsajqgDkvCEWgp6d5eJT6Q63Ng2neTbzBO76Lbe91vX/iVIW9dikq+Fs3yEo+ls4cxeXABD2LtcbQ==
 
-"@puregrid/core@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@puregrid/core/-/core-0.0.5.tgz#a6dded4b991a7c12e59f1f5f730c3aa1aceae852"
-  integrity sha512-ovRznG3PSEi0iE42NYssS8eMgK+xjG2u+QKHhmp9Sa7ftwQiUbTMCXDTCmfrbno42k9DmnF+Y4STao1iCQBd9A==
+"@puregrid/core@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@puregrid/core/-/core-0.0.6.tgz#c6fdb7b6db8de4ac2f2bdfdb6439190f591edf05"
+  integrity sha512-OJPZsyqS7bA9mBtVmYqJu4XA677O2Rv6VUpS3Z3w+d2Kd+vRLehM7oPkdCWNlixImcxqV0YLH6HIw3heGzU9sA==
   dependencies:
     "@puregrid/themes" "^0.0.2"
     clsx "^1.1.1"

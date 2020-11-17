@@ -21,8 +21,7 @@ When creating your own theme a typical approach would be to spread in `auroraThe
 import { Theme, umbraTheme } from '@puregrid/themes';
 
 const myCustomTheme: Theme = {
-  // Unless you override all theme variables you should spread
-  // in umbraTheme or auroraTheme.
+  // You should spread in auroraTheme (light) or umbraTheme (dark).
   ...umbraTheme,
   selectionBg: 'rgb(244, 188, 53)',
 }
