@@ -2,8 +2,8 @@
 const React = require("react")
 
 const HeadComponents = [
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HZR85QLNRL"></script>,
-  <script>{`
+  <script key="google-tag-manager" async src="https://www.googletagmanager.com/gtag/js?id=G-HZR85QLNRL"></script>,
+  <script key="google-analytics">{`
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
