@@ -20,11 +20,11 @@ const Container = styled.div({
 const StyledLink = styled.a({
   display: 'flex',
   alignItems: 'center',
-  color: colors.indigo.dark,
+  color: '#3742c5',
   lineHeight: 2,
   textDecoration: 'none',
   ':hover': {
-    color: colors.indigo.darker,
+    color: '#3b4af9',
   },
 });
 
