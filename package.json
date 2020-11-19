@@ -7,10 +7,11 @@
   "scripts": {
     "start": "gatsby develop -H 0.0.0.0",
     "build": "gatsby build",
-    "clean": "gatsby clean"
+    "clean": "gatsby clean",
+    "serve": "gatsby serve"
   },
   "dependencies": {
-    "@puregrid/core": "^0.0.6",
+    "@puregrid/core": "^0.0.7",
     "@puregrid/themes": "^0.0.2",
     "cuid": "^2.1.8",
     "gatsby": "^2.26.1",

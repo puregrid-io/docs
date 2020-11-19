@@ -62,12 +62,15 @@ export function NoBordersTheme() {
     getItemId: person => person.uid,
   });
 
+  // Note `themeId` is rarely needed (here because the styling docs has two different
+  // grid themes on the same page).
   return (
     <Grid<Person>
       columns={columns}
       onColumnsChange={setColumns}
       rows={rows}
       theme={noBordersTheme}
+      themeId="no-borders"
     />
   );
 }
