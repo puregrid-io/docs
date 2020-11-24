@@ -20,7 +20,7 @@ const Container = styled.div({
 const StyledLink = styled.a({
   display: 'flex',
   alignItems: 'center',
-  color: '#3742c5',
+  color: '#3e3ab8',
   lineHeight: 2,
   textDecoration: 'none',
   ':hover': {

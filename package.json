@@ -11,10 +11,10 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "@puregrid/core": "^0.0.7",
-    "@puregrid/themes": "^0.0.2",
+    "@puregrid/core": "^0.0.8",
+    "@puregrid/themes": "^0.0.3",
     "cuid": "^2.1.8",
-    "gatsby": "^2.26.1",
+    "gatsby": "^2.27.0",
     "gatsby-theme-apollo-docs": "4.5.9",
     "lightweight-charts": "3.2.0",
     "lodash": "^4.17.20",
@@ -25,8 +25,8 @@
     "use-resize-observer": "^7.0.0"
   },
   "devDependencies": {
-    "@types/react": "^16.9.56",
-    "@types/react-dom": "^16.9.9",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0"
   },

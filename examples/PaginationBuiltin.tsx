@@ -7,7 +7,6 @@ import {
   useClientRows,
   Direction,
   ValueSource,
-  Button,
   saveToCsv,
 } from '@puregrid/core';
 import top100cryptos from '../static/top100cryptos.json';
