@@ -7,6 +7,8 @@ module.exports = {
         siteName: 'Puregrid',
         description: 'A full-featured, lightweight data grid for React',
         githubRepo: 'puregrid-io/puregrid',
+        algoliaApiKey: '4ab9f31404cc2b2360ca0a27f8f4bbc0',
+        algoliaIndexName: 'puregrid',
         sidebarCategories: {
           null: ['index', 'your-first-grid', 'grid-props', 'styling', 'rtl', 'csv-export'],
           Columns: [

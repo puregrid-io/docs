@@ -11,16 +11,16 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
-    "@puregrid/core": "^0.0.8",
-    "@puregrid/themes": "^0.0.3",
+    "@puregrid/core": "^0.0.9",
+    "@puregrid/themes": "^0.0.4",
     "cuid": "^2.1.8",
-    "gatsby": "^2.27.0",
-    "gatsby-theme-apollo-docs": "4.5.9",
+    "gatsby": "^2.29.2",
+    "gatsby-theme-apollo-docs": "4.5.12",
     "lightweight-charts": "3.2.0",
     "lodash": "^4.17.20",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-icons": "^3.11.0",
+    "react-icons": "^4.1.0",
     "react-sparklines": "^1.7.0",
     "use-resize-observer": "^7.0.0"
   },
